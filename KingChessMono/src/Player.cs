@@ -59,11 +59,18 @@ namespace KingChess
 			{
 				return _board;
 			}
-			set
-			{
-				_board = value;
-			}
+            set
+            {
+                _board = value;
+            }
 		}
+
+        public void SetupPlayer(Board board)
+        {
+            _board = board;
+            StartGameDeployment ();
+            AddPieces ();
+        }
 
 		public void StartGameDeployment()
 		{
@@ -124,25 +131,7 @@ namespace KingChess
 			_pieces.Remove(p);
 		}
 
-		public Piece SelectPieceAt(int x, int y)
-		{
-			if (_pieces.Contains(_board.Cells[x, y].Piece))
-			{
-				_board.Cells[x, y].Piece.isSelected = true;
-				foreach (Piece piece in _pieces)
-				{
-					if (piece != _board.Cells[x, y].Piece && piece.isSelected)
-						DeselectPiece(piece);
-				}
-				return _board.Cells[x, y].Piece;
-			}
-			return null;
-		}
-
-		public void DeselectPiece(Piece p)
-		{
-			p.isSelected = false;
-		}
+		
 
 	}
 }

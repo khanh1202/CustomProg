@@ -41,11 +41,33 @@ namespace KingChess
 			}
 			set
 			{
-				_piece = value;
-				if (_piece != null)
-					_piece.Cell = this;
+                if (_piece == null)
+                {
+					_piece = value;
+                    if (_piece != null)
+                        _piece.Deployed (this); 
+                } else
+                {
+                    throw new InvalidOperationException ("Cannot move a piece here");
+                }
 			}
 		}
+
+        public void RemovePiece(Player p)
+        {
+            if (_piece != null)
+            {
+				RemovePieceFromPlayer (p);
+				_piece.RemoveCell ();
+				_piece = null; 
+            }
+        }
+
+        public void RemovePieceFromPlayer(Player p)
+        {
+            if (p.Pieces.Contains (_piece))
+                p.Pieces.Remove (_piece);
+        }
 
 		public bool isEmpty()
 		{

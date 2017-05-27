@@ -18,8 +18,8 @@ namespace KingChess
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();
-			int[] possiblePosX = { Cell.X - 1, Cell.X - 1, Cell.X + 1, Cell.X + 1, Cell.X + 2, Cell.X + 2, Cell.X - 2, Cell.X - 2 };
-			int[] possiblePosY = { Cell.Y + 2, Cell.Y - 2, Cell.Y + 2, Cell.Y - 2, Cell.Y + 1, Cell.Y - 1, Cell.Y + 1, Cell.Y - 1 };
+			int[] possiblePosX = { X - 1, X - 1, X + 1, X + 1, X + 2, X + 2, X - 2, X - 2 };
+			int[] possiblePosY = { Y + 2, Y - 2, Y + 2, Y - 2, Y + 1, Y - 1, Y + 1, Y - 1 };
 			for (int i = 0; i < 8; i++)
 			{
 				if (possiblePosX[i] >= 0 && possiblePosX[i] < 8 && possiblePosY[i] >= 0 && possiblePosY[i] < 8)

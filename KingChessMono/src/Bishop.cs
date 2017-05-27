@@ -20,8 +20,8 @@ namespace KingChess
 		{
 			List<Cell> possiblemoves = new List<Cell>();
 			int tempx, tempy;
-			tempx = Cell.X - 1;
-			tempy = Cell.Y - 1;
+            tempx = X - 1;
+			tempy = Y - 1;
 			while (tempx >= 0 && tempy >= 0)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -37,8 +37,8 @@ namespace KingChess
 				tempy--;
 			}
 
-			tempx = Cell.X + 1;
-			tempy = Cell.Y + 1;
+			tempx = X + 1;
+			tempy = Y + 1;
 			while (tempx < 8 && tempy < 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -54,8 +54,8 @@ namespace KingChess
 				tempy++;
 			}
 
-			tempx = Cell.X + 1;
-			tempy = Cell.Y - 1;
+			tempx = X + 1;
+			tempy = Y - 1;
 			while (tempx < 8 && tempy >= 0)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -71,8 +71,8 @@ namespace KingChess
 				tempy--;
 			}
 
-			tempx = Cell.X - 1;
-			tempy = Cell.Y + 1;
+			tempx = X - 1;
+			tempy = Y + 1;
 			while (tempx >= 0 && tempy < 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)

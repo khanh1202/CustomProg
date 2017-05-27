@@ -18,58 +18,58 @@ namespace KingChess
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();
-			int tempx = Cell.X - 1;
+			int tempx = X - 1;
 			while (tempx >= 0)
 			{
-				if (board.Cells[tempx, Cell.Y].Piece == null)
+				if (board.Cells[tempx, Y].Piece == null)
 					possiblemoves.Add(board.Cells[tempx, Cell.Y]);
-				else if (board.Cells[tempx, Cell.Y].Piece.Team == this.Team)
+				else if (board.Cells[tempx, Y].Piece.Team == this.Team)
 					break;
 				else
 				{
-					possiblemoves.Add(board.Cells[tempx, Cell.Y]);
+					possiblemoves.Add(board.Cells[tempx, Y]);
 					break;
 				}
 				tempx--;
 			}
-			tempx = Cell.X + 1;
+			tempx = X + 1;
 			while (tempx < 8)
 			{
-				if (board.Cells[tempx, Cell.Y].Piece == null)
-					possiblemoves.Add(board.Cells[tempx, Cell.Y]);
-				else if (board.Cells[tempx, Cell.Y].Piece.Team == this.Team)
+				if (board.Cells[tempx, Y].Piece == null)
+					possiblemoves.Add(board.Cells[tempx, Y]);
+				else if (board.Cells[tempx, Y].Piece.Team == this.Team)
 					break;
 				else
 				{
-					possiblemoves.Add(board.Cells[tempx, Cell.Y]);
+					possiblemoves.Add(board.Cells[tempx, Y]);
 					break;
 				}
 				tempx++;
 			}
-			int tempy = Cell.Y - 1;
+			int tempy = Y - 1;
 			while (tempy >= 0)
 			{
-				if (board.Cells[Cell.X, tempy].Piece == null)
-					possiblemoves.Add(board.Cells[Cell.X, tempy]);
-				else if (board.Cells[Cell.X, tempy].Piece.Team == this.Team)
+				if (board.Cells[X, tempy].Piece == null)
+					possiblemoves.Add(board.Cells[X, tempy]);
+				else if (board.Cells[X, tempy].Piece.Team == this.Team)
 					break;
 				else
 				{
-					possiblemoves.Add(board.Cells[Cell.X, tempy]);
+					possiblemoves.Add(board.Cells[X, tempy]);
 					break;
 				}
 				tempy--;
 			}
-			tempy = Cell.Y + 1;
+			tempy = Y + 1;
 			while (tempy < 8)
 			{
-				if (board.Cells[Cell.X, tempy].Piece == null)
-					possiblemoves.Add(board.Cells[Cell.X, tempy]);
-				else if (board.Cells[Cell.X, tempy].Piece.Team == this.Team)
+				if (board.Cells[X, tempy].Piece == null)
+					possiblemoves.Add(board.Cells[X, tempy]);
+				else if (board.Cells[X, tempy].Piece.Team == this.Team)
 					break;
 				else
 				{
-					possiblemoves.Add(board.Cells[Cell.X, tempy]);
+					possiblemoves.Add(board.Cells[X, tempy]);
 					break;
 				}
 				tempy++;

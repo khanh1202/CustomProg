@@ -1,17 +1,23 @@
 ﻿<Properties StartupConfiguration="{871B5A90-103A-46A5-BBB9-07C02B9851D1}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/Board.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Bishop.cs">
     <Files>
-      <File FileName="src/TestBoard.cs" Line="1" Column="1" />
-      <File FileName="src/TestRook.cs" Line="118" Column="48" />
-      <File FileName="src/TestGame.cs" Line="59" Column="13" />
-      <File FileName="src/ChessGame.cs" Line="132" Column="25" />
+      <File FileName="src/TestBoard.cs" Line="22" Column="37" />
+      <File FileName="src/TestRook.cs" Line="155" Column="29" />
+      <File FileName="src/TestGame.cs" Line="20" Column="53" />
+      <File FileName="src/ChessGame.cs" Line="120" Column="31" />
       <File FileName="src/GameMain.cs" Line="22" Column="66" />
-      <File FileName="src/Pawn.cs" Line="39" Column="5" />
-      <File FileName="src/Piece.cs" Line="18" Column="26" />
-      <File FileName="src/Player.cs" Line="107" Column="27" />
-      <File FileName="src/Cell.cs" Line="57" Column="48" />
-      <File FileName="src/Knight.cs" Line="1" Column="1" />
-      <File FileName="src/Board.cs" Line="17" Column="4" />
+      <File FileName="src/Pawn.cs" Line="56" Column="16" />
+      <File FileName="src/Piece.cs" Line="139" Column="33" />
+      <File FileName="src/Player.cs" Line="62" Column="16" />
+      <File FileName="src/Cell.cs" Line="69" Column="42" />
+      <File FileName="src/Knight.cs" Line="25" Column="32" />
+      <File FileName="src/Board.cs" Line="67" Column="58" />
+      <File FileName="src/Bishop.cs" Line="72" Column="5" />
+      <File FileName="src/King.cs" Line="91" Column="6" />
+      <File FileName="src/Move.cs" Line="1" Column="1" />
+      <File FileName="src/PieceType.cs" Line="1" Column="1" />
+      <File FileName="src/Queen.cs" Line="138" Column="18" />
+      <File FileName="src/Rook.cs" Line="72" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug-Mac" />

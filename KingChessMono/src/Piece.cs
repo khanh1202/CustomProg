@@ -8,7 +8,9 @@ namespace KingChess
         public const int BOTTOM_LEFT_CELL_X = 45;
         public const int BOTTOM_LEFT_CELL_Y = 448;
         public const int CELL_WIDTH = 58;
-		private Cell _cell = null;
+		private Cell _cell;
+        private int _x;
+        private int _y;
 		private TeamColor _team;
 		private bool _isSelected;
 		private List<Cell> _possibleMoves = new List<Cell>();
@@ -60,6 +62,22 @@ namespace KingChess
             get;
         }
 
+        public int X
+        {
+            get
+            {
+                return _x;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return _y;
+            }
+        }
+
 		public Piece(TeamColor team)
 		{
 			_team = team;
@@ -73,29 +91,53 @@ namespace KingChess
 			}
 		}
 
-		public Cell Cell
-		{
-			get
-			{
-				return _cell;
-			}
-			set
-			{
-				_cell = value;
-			}
-		}
-
 		public bool isSelected
 		{
 			get
 			{
 				return _isSelected;
 			}
-			set
-			{
-				_isSelected = value;
-			}
 		}
+
+        public void Deployed(Cell c)
+        {
+            if (c != null)
+            {
+				_x = c.X;
+				_y = c.Y;
+				_cell = c; 
+            } else
+            {
+                _x = -1;
+                _y = -1;
+                _cell = null;
+            }
+
+        }
+
+        public Cell Cell
+        {
+            get
+            {
+                return _cell;
+            }
+
+        }
+
+        public void RemoveCell()
+        {
+            Deployed (null);
+        }
+
+        public void Select()
+        {
+            _isSelected = true;
+        }
+
+        public void Deselect()
+        {
+            _isSelected = false;
+        }
 
 		public abstract List<Cell> GetPossibleMoves(Board board);
 	}

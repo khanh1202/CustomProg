@@ -29,8 +29,8 @@ namespace KingChess
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();
-			int[] possiblePosX = { Cell.X + 1, Cell.X + 1, Cell.X + 1, Cell.X - 1, Cell.X - 1, Cell.X - 1, Cell.X, Cell.X };
-			int[] possiblePosY = { Cell.Y - 1, Cell.Y, Cell.Y + 1, Cell.Y - 1, Cell.Y + 1, Cell.Y, Cell.Y + 1, Cell.Y - 1 };
+			int[] possiblePosX = { X + 1, X + 1, X + 1, X - 1, X - 1, X - 1, X, X };
+			int[] possiblePosY = { Y - 1, Y, Y + 1, Y - 1, Y + 1, Y, Y + 1, Y - 1 };
 			for (int i = 0; i < 8; i++)
 			{
 				if (possiblePosX[i] >= 0 && possiblePosX[i] < 8 && possiblePosY[i] >= 0 && possiblePosY[i] < 8)
@@ -47,7 +47,7 @@ namespace KingChess
 			bool result = false;
 			for (int i = 0; i < opponent.Pieces.Count; i++)
 			{
-				if (Cell.isPossibleMoveOf(opponent.Pieces[i], b))
+                if (Cell.isPossibleMoveOf(opponent.Pieces[i], b))
 				{
 					_pieceChecking = opponent.Pieces[i];
 					result = true;
@@ -74,19 +74,19 @@ namespace KingChess
 			List<Cell> checkingPath = new List<Cell>();
 			foreach (Cell c in _pieceChecking.GetPossibleMoves(opponnet.Board))
 			{
-				if (_pieceChecking.Cell.X == Cell.X)
+                if (_pieceChecking.X == X)
 				{
-					if (c.X == Cell.X && (_pieceChecking.Cell.Y - Cell.Y) * (_pieceChecking.Cell.Y - c.Y) > 0)
+					if (c.X == X && (_pieceChecking.Y - c.Y) * (_pieceChecking.Y - c.Y) > 0)
 						checkingPath.Add(c);
 				}
-				else if (_pieceChecking.Cell.Y == Cell.Y)
+				else if (_pieceChecking.Y == Y)
 				{
-					if (c.Y == Cell.Y && (_pieceChecking.Cell.X - Cell.X) * (_pieceChecking.Cell.X - c.X) > 0)
+					if (c.Y == Y && (_pieceChecking.X - X) * (_pieceChecking.X - c.X) > 0)
 						checkingPath.Add(c);
 				}
-				else if (Math.Abs(_pieceChecking.Cell.X - Cell.X) == Math.Abs(_pieceChecking.Cell.Y - Cell.Y))
+				else if (Math.Abs(_pieceChecking.X - X) == Math.Abs(_pieceChecking.Y - Y))
 				{
-					if (Math.Abs(c.X - Cell.X) == Math.Abs(c.Y - Cell.Y) && ((_pieceChecking.Cell.X - Cell.X) * (_pieceChecking.Cell.X - c.X) + (_pieceChecking.Cell.Y - Cell.Y) * (_pieceChecking.Cell.Y - c.Y)) > 0)
+					if (Math.Abs(c.X - X) == Math.Abs(c.Y - Y) && ((_pieceChecking.X - X) * (_pieceChecking.X - c.X) + (_pieceChecking.Y - Y) * (_pieceChecking.Y - c.Y)) > 0)
 						checkingPath.Add(c);
 				}
 			}

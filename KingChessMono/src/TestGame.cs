@@ -17,7 +17,7 @@ namespace KingChess
 		[Test()]
         public void TestSelectedPiece()
 		{
-            game.Board.Cells [0, 1].Piece.isSelected = true;
+            game.Board.Cells [0, 1].Piece.Select ();
             Assert.AreEqual (game.Board.Cells[0, 1].Piece.GetType (), typeof (Pawn));
 		}
 

@@ -20,8 +20,6 @@ namespace KingChess
 			players[0] = new Player(TeamColor.White);
 			players[1].Opponent = players[0];
 			players[0].Opponent = players[1];
-			players[0].Board = board;
-			players[1].Board = board;
 		}
 
 		[Test()]

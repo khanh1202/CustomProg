@@ -58,32 +58,14 @@ namespace KingChess
             SwinGame.DrawBitmap (MyBitmap (), 0, 0);
         }
 
-		private void Capture(Piece capturing, Piece patient)
-		{
-			patient.Cell.Piece = null;
-			capturing.Cell.Piece = null;
-			patient.Cell.Piece = capturing;
-			patient.Cell = null;
-		}
-
-
 		public void Move(Player player, Piece p, int x, int y)
 		{
 			if (Cells[x, y].isPossibleMoveOf(p, this))
-			{
-				if (Cells[x, y].Piece != null)
-				{
-					_moves.Add(new Move(p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
-					player.Opponent.Pieces.Remove(Cells[x, y].Piece);
-					Capture(p, Cells[x, y].Piece);
-				}
-				else
-				{
-					_moves.Add(new Move(p, null, p.Cell, Cells[x, y]));
-                    Cells [x, y].Piece = p;
-					p.Cell.Piece = null;
-					
-				}
+            {
+				_moves.Add(new Move(p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
+                p.Cell.RemovePiece (player.Opponent);
+                Cells [x, y].RemovePiece (player.Opponent);
+                Cells [x, y].Piece = p;
 			}
 		}
 

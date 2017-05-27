@@ -76,22 +76,10 @@ namespace KingChess
             }
         }
 
-        public GameState GameState
-        {
-            get
-            {
-                return _state;
-            }
-        }
-
 		public void SetUpGame()
 		{
-			_players[0].Board = gameBoard;
-			_players[1].Board = gameBoard;
-			_players[0].StartGameDeployment();
-			_players[1].StartGameDeployment();
-			_players[0].AddPieces();
-			_players[1].AddPieces();
+            _players [0].SetupPlayer (gameBoard);
+            _players [1].SetupPlayer (gameBoard);
 			_playerInTurnIndex = 1;
 		}
 
@@ -109,28 +97,28 @@ namespace KingChess
         public void TakeTheTurn(Point2D point)
         {
             int waitingPlayer = (_playerInTurnIndex + 1) % 2;
-            if (GameState == GameState.Selecting)
+            if (_state == GameState.Selecting)
             {
                 Cell chosen = FetchCell (point);
-                if (chosen != null && _players[_playerInTurnIndex].Pieces.Contains (chosen.Piece))
+                if (chosen != null && chosen.Piece != null && _players[_playerInTurnIndex].Pieces.Contains (chosen.Piece))
                 {
                     _state = GameState.Moving;
-                    chosen.Piece.isSelected = true;
+                    chosen.Piece.Select ();
                     _chosenPiece = chosen.Piece;
                 }
             }
-            else if (GameState == GameState.Moving)
+            else if (_state == GameState.Moving)
             {
                 Cell chosen = FetchCell (point);
-                if (chosen.Piece.isSelected) 
+                if (chosen.Piece != null && chosen.Piece.isSelected) 
                 {
                     _state = GameState.Selecting;
-                    chosen.Piece.isSelected = false;
+                    chosen.Piece.Deselect ();
                 }
                 else if (chosen.isPossibleMoveOf (_chosenPiece, gameBoard))
                 {
                     _state = GameState.Selecting;
-                    _chosenPiece.isSelected = false;
+                    _chosenPiece.Deselect ();
                     gameBoard.Move (_players [_playerInTurnIndex], _chosenPiece, chosen.X, chosen.Y);
                     _playerInTurnIndex = waitingPlayer;
                 }
