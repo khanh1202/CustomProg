@@ -5,7 +5,7 @@ namespace KingChess
 	public class King : Piece
 	{
 		private Piece _pieceChecking;
-		public King(TeamColor team): base(team)
+		public King(TeamColor team): base(team, 1)
 		{
 		}
 
@@ -37,7 +37,24 @@ namespace KingChess
 					if (board.Cells[possiblePosX[i], possiblePosY[i]].Piece == null || board.Cells[possiblePosX[i], possiblePosY[i]].Piece.Team != Team)
 					possiblemoves.Add(board.Cells[possiblePosX[i], possiblePosY[i]]);
 			}
-			return possiblemoves;
+            if (!board.isKingMovedBefore (Team))
+            {
+                if (!board.isRookMovedBefore (Team, 1) && board.AreTwoPiecesNotBlocked (Team, 1))
+                {
+                    if (Team == TeamColor.White)
+                        possiblemoves.Add (board.Cells [2, 0]);
+                    else
+                        possiblemoves.Add (board.Cells [2, 7]);
+                }
+                if (!board.isRookMovedBefore (Team, 2) && board.AreTwoPiecesNotBlocked (Team, 2)) 
+                {
+                    if (Team == TeamColor.White)
+                        possiblemoves.Add (board.Cells [6, 0]);
+                    else
+                        possiblemoves.Add (board.Cells [6, 7]);
+                }
+            }
+            return possiblemoves;
 
 		}
 
@@ -56,6 +73,20 @@ namespace KingChess
 			return result;
 		}
 
+        public bool isChecked(Player opponent, Board b, Piece p)
+        {
+            bool result = false;
+            for (int i = 0; i < opponent.Pieces.Count; i++)
+            {
+                if (opponent.Pieces[i] != p && Cell.isPossibleMoveOf (opponent.Pieces[i], b))
+                {
+                    _pieceChecking = opponent.Pieces [i];
+                    result = true;
+                }
+            }
+            return result;
+        }
+
 		//check if the King cannot move out of the mate when being checked
 		public bool isOutOfMove(Player opponent, Board b)
 		{
@@ -66,13 +97,21 @@ namespace KingChess
                 if (possibleEscapes[i].Piece == null)
                 {
 					if (!GetPossibleMoves (opponent.Board) [i].isChecked (opponent, b))
-						result = false;
+                    {
+                        result = false;
+                        Console.WriteLine ("escaped");
+                    }
+						
                 } else
                 {
                     Piece temp = possibleEscapes [i].Piece;
                     opponent.RemovePiece (possibleEscapes[i]);
 					if (!GetPossibleMoves (opponent.Board) [i].isChecked (opponent, b))
-						result = false;
+                    {
+                        result = false;
+                        Console.WriteLine ("escaped");
+                    }
+						
                     opponent.AddPiece (temp, possibleEscapes[i]);
                 }    
                     
@@ -120,16 +159,35 @@ namespace KingChess
 					if (p.GetType() != typeof(King) && c.isPossibleMoveOf(p, b))
 					{
 						Cell temp = p.Cell;
-                        b.MoveWithoutChecking(opponent.Opponent, p, c.X, c.Y);
-						if (!isChecked(opponent, b))
-						{
-                            Console.WriteLine ("blockkkkkkkk");
-                            b.MoveWithoutChecking (opponent.Opponent, p, temp.X, temp.Y);
-                            if (tempPiece != null)
-                                opponent.AddPiece (tempPiece, c);
-                            return true;
-						}
-                        b.MoveWithoutChecking(opponent.Opponent, p, temp.X, temp.Y);
+                        if (c.Piece == null)
+                        {
+                            p.Cell.RemovePiece (opponent.Opponent);
+                            c.Piece = p;
+                            if (!isChecked (opponent, b))
+                            {
+                                c.RemovePiece (opponent.Opponent);
+                                temp.Piece = p;
+                                return true;
+                            }
+                            c.RemovePiece (opponent.Opponent);
+							temp.Piece = p;
+                        } 
+                        else
+                        {
+                            tempPiece.Cell.RemovePiece (opponent);
+                            p.Cell.RemovePiece (opponent.Opponent);
+                            c.Piece = p;
+                            if (!isChecked (opponent, b, tempPiece))
+                            {
+                                c.RemovePiece (opponent.Opponent);
+                                c.Piece = tempPiece;
+                                temp.Piece = p;
+                                return true;
+                            }
+							c.RemovePiece (opponent.Opponent);
+							c.Piece = tempPiece;
+							temp.Piece = p;
+                        }
 					}
 				}
 			}
@@ -146,6 +204,7 @@ namespace KingChess
 			}
 			return false;
 		}
-			
+
+
 	}
 }

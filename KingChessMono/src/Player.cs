@@ -77,8 +77,8 @@ namespace KingChess
 			{
 				for (int i = 0; i < 8; i++)
                     AddPiece(new Pawn(TeamColor.White), _board.Cells[i, 1]);
-                AddPiece(new Rook(TeamColor.White), _board.Cells [0, 0]);
-                AddPiece (new Rook (TeamColor.White), _board.Cells [7, 0]);
+                AddPiece(new Rook(TeamColor.White, 1), _board.Cells [0, 0]);
+                AddPiece (new Rook (TeamColor.White, 2), _board.Cells [7, 0]);
                 AddPiece (new Knight (TeamColor.White), _board.Cells [1, 0]);
                 AddPiece (new Knight (TeamColor.White), _board.Cells [6, 0]);
                 AddPiece (new Bishop (TeamColor.White), _board.Cells [2, 0]);
@@ -90,8 +90,8 @@ namespace KingChess
 			{
                 for (int i = 0; i < 8; i++)
                     AddPiece (new Pawn (TeamColor.Black), _board.Cells [i, 6]);
-                AddPiece (new Rook (TeamColor.Black), _board.Cells [0, 7]);
-                AddPiece (new Rook (TeamColor.Black), _board.Cells [7, 7]);
+                AddPiece (new Rook (TeamColor.Black, 1), _board.Cells [0, 7]);
+                AddPiece (new Rook (TeamColor.Black, 2), _board.Cells [7, 7]);
                 AddPiece (new Knight (TeamColor.Black), _board.Cells [1, 7]);
                 AddPiece (new Knight (TeamColor.Black), _board.Cells [6, 7]);
                 AddPiece (new Bishop (TeamColor.Black), _board.Cells [2, 7]);

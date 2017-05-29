@@ -8,6 +8,7 @@ namespace KingChess
         public const int BOTTOM_LEFT_CELL_X = 45;
         public const int BOTTOM_LEFT_CELL_Y = 448;
         public const int CELL_WIDTH = 58;
+        private int _id;
 		private Cell _cell;
         private int _x;
         private int _y;
@@ -78,10 +79,19 @@ namespace KingChess
             }
         }
 
-		public Piece(TeamColor team)
+		public Piece(TeamColor team, int ID)
 		{
 			_team = team;
+            _id = ID;
 		}
+
+        public int ID
+        {
+            get
+            {
+                return _id;
+            }
+        }
 
 		public TeamColor Team
 		{

@@ -122,13 +122,33 @@ namespace KingChess
 				else if (chosen.isPossibleMoveOf (_chosenPiece, gameBoard)) 
 				{
 					_state = GameState.Moved;
-					_chosenPiece.Deselect ();
 					gameBoard.Move (_players [_playerInTurnIndex], _chosenPiece, chosen.X, chosen.Y);
-					_playerInTurnIndex = _playerwaitingIndex;
+                    if (_chosenPiece.GetType () == typeof (King))
+                        MoveRookInCastle (_players [_playerInTurnIndex].Team, chosen);
+                    _chosenPiece.Deselect ();
+                    _playerInTurnIndex = _playerwaitingIndex;
 					_playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
 				}
             }
 
+        }
+
+        public void MoveRookInCastle(TeamColor team, Cell cellKingMovedTo)
+        {
+            if (team == TeamColor.White)
+            {
+                if (cellKingMovedTo == gameBoard.Cells [2, 0])
+                    gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [0, 0].Piece, 3, 0);
+                if (cellKingMovedTo == gameBoard.Cells [6, 0])
+                    gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [7, 0].Piece, 5, 0);
+            }
+            if (team == TeamColor.Black)
+            {
+				if (cellKingMovedTo == gameBoard.Cells [2, 7])
+					gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [0, 7].Piece, 3, 7);
+				if (cellKingMovedTo == gameBoard.Cells [6, 7])
+					gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [7, 7].Piece, 5, 7);
+            }
         }
 
         public void HighlightCells (Piece chosen)

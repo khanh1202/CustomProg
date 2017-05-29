@@ -4,7 +4,7 @@ namespace KingChess
 {
 	public class Queen : Piece
 	{
-		public Queen(TeamColor color) : base(color)
+		public Queen(TeamColor color) : base(color, 1)
 		{
 		}
 

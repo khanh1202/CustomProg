@@ -79,5 +79,58 @@ namespace KingChess
 			player.AddPiece (temp, Cells [x, y]);
         }
 
+		public bool isKingMovedBefore (TeamColor team)
+		{
+			foreach (Move m in _moves) {
+				if (m.PieceMove.GetType () == typeof (King) && m.PieceMove.Team == team)
+					return true;
+			}
+			return false;
+		}
+
+        public bool isRookMovedBefore(TeamColor team, int ID)
+        {
+            foreach (Move m in _moves)
+            {
+                if (m.PieceMove.GetType () == typeof (Rook) && m.PieceMove.Team == team && m.PieceMove.ID == ID)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool AreTwoPiecesNotBlocked(TeamColor team, int rookID)
+        {
+            switch (team)
+            {
+                case TeamColor.White:
+					if (rookID == 1) 
+                    {
+						if (Cells [1, 0].Piece == null && Cells [2, 0].Piece == null && Cells [3, 0].Piece == null)
+							return true;
+						return false;
+					} 
+                    else 
+                    {
+						if (Cells [5, 0].Piece == null && Cells [6, 0].Piece == null)
+							return true;
+						return false;
+					}
+                default:
+					if (rookID == 1) 
+                    {
+						if (Cells [1, 7].Piece == null && Cells [2, 7].Piece == null && Cells [3, 7].Piece == null)
+							return true;
+						return false;
+					} 
+                    else 
+                    {
+						if (Cells [5, 7].Piece == null && Cells [6, 7].Piece == null)
+							return true;
+						return false;
+					}
+            }
+
+        }
+
 	}
 }
