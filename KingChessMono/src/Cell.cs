@@ -45,8 +45,11 @@ namespace KingChess
                 {
 					_piece = value;
                     if (_piece != null)
-                        _piece.Deployed (this); 
-                } else
+                    {
+                        _piece.Deployed (this);
+					}
+                } 
+                else
                 {
                     throw new InvalidOperationException ("Cannot move a piece here");
                 }
@@ -57,16 +60,9 @@ namespace KingChess
         {
             if (_piece != null)
             {
-				RemovePieceFromPlayer (p);
 				_piece.RemoveCell ();
 				_piece = null; 
             }
-        }
-
-        public void RemovePieceFromPlayer(Player p)
-        {
-            if (p.Pieces.Contains (_piece))
-                p.Pieces.Remove (_piece);
         }
 
 		public bool isEmpty()

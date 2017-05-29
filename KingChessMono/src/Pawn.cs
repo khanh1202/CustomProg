@@ -49,7 +49,7 @@ namespace KingChess
 				}
 
 				if ((X - 1 >= 0) && (Y - 1 >= 0) && (board.Cells[X - 1, Y - 1].Piece != null) && (board.Cells[X - 1, Y - 1].Piece.Team != Team))
-					possiblemoves.Add(board.Cells[X - 1, Y + 1]);
+					possiblemoves.Add(board.Cells[X - 1, Y - 1]);
 				if ((X + 1 < 8) && (Y - 1 >= 0) && (board.Cells[X + 1, Y - 1].Piece != null) && (board.Cells[X + 1, Y - 1].Piece.Team != Team))
 					possiblemoves.Add(board.Cells[X + 1, Y - 1]);
 			}

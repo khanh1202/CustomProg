@@ -61,8 +61,6 @@
     <Compile Include="src\Player.cs" />
     <Compile Include="src\Queen.cs" />
     <Compile Include="src\Rook.cs" />
-    <Compile Include="src\TestBoard.cs" />
-    <Compile Include="src\TestRook.cs" />
     <Compile Include="src\PieceType.cs" />
     <Compile Include="src\TeamColor.cs" />
     <Compile Include="src\GameState.cs" />

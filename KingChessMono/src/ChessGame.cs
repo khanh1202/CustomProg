@@ -12,8 +12,10 @@ namespace KingChess
 		private Player[] _players = new Player[2];
         private Board gameBoard;
 		private int _playerInTurnIndex;
+		private int _playerwaitingIndex;
         private Piece _chosenPiece;
         private GameState _state;
+        private string _message = "WOW";
 
 		public ChessGame()
 		{
@@ -58,6 +60,7 @@ namespace KingChess
                 if (p.isSelected)
                     HighlightCells (p);
             }
+            SwinGame.DrawText (_message, Color.Red, 600, 300);
         }
 
 		public Player[] Players
@@ -96,7 +99,7 @@ namespace KingChess
 
         public void TakeTheTurn(Point2D point)
         {
-            int waitingPlayer = (_playerInTurnIndex + 1) % 2;
+			_playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
             if (_state == GameState.Selecting)
             {
                 Cell chosen = FetchCell (point);
@@ -109,19 +112,21 @@ namespace KingChess
             }
             else if (_state == GameState.Moving)
             {
-                Cell chosen = FetchCell (point);
-                if (chosen.Piece != null && chosen.Piece.isSelected) 
-                {
-                    _state = GameState.Selecting;
-                    chosen.Piece.Deselect ();
-                }
-                else if (chosen.isPossibleMoveOf (_chosenPiece, gameBoard))
-                {
-                    _state = GameState.Selecting;
-                    _chosenPiece.Deselect ();
-                    gameBoard.Move (_players [_playerInTurnIndex], _chosenPiece, chosen.X, chosen.Y);
-                    _playerInTurnIndex = waitingPlayer;
-                }
+				
+				Cell chosen = FetchCell (point);
+				if (chosen.Piece != null && chosen.Piece.isSelected) 
+				{
+					_state = GameState.Selecting;
+					chosen.Piece.Deselect ();
+				} 
+				else if (chosen.isPossibleMoveOf (_chosenPiece, gameBoard)) 
+				{
+					_state = GameState.Moved;
+					_chosenPiece.Deselect ();
+					gameBoard.Move (_players [_playerInTurnIndex], _chosenPiece, chosen.X, chosen.Y);
+					_playerInTurnIndex = _playerwaitingIndex;
+					_playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
+				}
             }
 
         }
@@ -132,6 +137,25 @@ namespace KingChess
             foreach (Cell c in chosen.GetPossibleMoves (gameBoard))
                 c.DrawOutline ();
         }
+
+		public void Update ()
+		{
+			if (_state == GameState.Moved) 
+			{
+				if (_players [_playerInTurnIndex].King.isChecked (_players [_playerwaitingIndex], gameBoard)) 
+				{
+					Console.WriteLine ("Checked");
+                    if (_players [_playerInTurnIndex].King.isCheckmated (_players [_playerwaitingIndex], gameBoard)) {
+                        _message = "Checkmated";
+                        _state = GameState.Ended;
+                    } 
+                    else
+                        _state = GameState.Selecting;
+				} 
+				else
+					_state = GameState.Selecting;
+			}
+		}
 
 
 	}

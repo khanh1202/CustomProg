@@ -60,11 +60,23 @@ namespace KingChess
 		public bool isOutOfMove(Player opponent, Board b)
 		{
 			bool result = true;
-			for (int i = 0; i < GetPossibleMoves(opponent.Board).Count; i++)
-			{
-				if (!GetPossibleMoves(opponent.Board)[i].isChecked(opponent, b))
-					result = false;
-			}
+            List<Cell> possibleEscapes = GetPossibleMoves (opponent.Board);
+            for (int i = 0; i < possibleEscapes.Count; i++) 
+            {
+                if (possibleEscapes[i].Piece == null)
+                {
+					if (!GetPossibleMoves (opponent.Board) [i].isChecked (opponent, b))
+						result = false;
+                } else
+                {
+                    Piece temp = possibleEscapes [i].Piece;
+                    opponent.RemovePiece (possibleEscapes[i]);
+					if (!GetPossibleMoves (opponent.Board) [i].isChecked (opponent, b))
+						result = false;
+                    opponent.AddPiece (temp, possibleEscapes[i]);
+                }    
+                    
+            }
 			return result;
 		}
 
@@ -102,18 +114,22 @@ namespace KingChess
 				return false;
 			foreach (Cell c in CheckingPath(opponent))
 			{
+                Piece tempPiece = c.Piece;
 				foreach (Piece p in opponent.Opponent.Pieces)
 				{
 					if (p.GetType() != typeof(King) && c.isPossibleMoveOf(p, b))
 					{
 						Cell temp = p.Cell;
-						b.Move(opponent.Opponent, p, c.X, c.Y);
+                        b.MoveWithoutChecking(opponent.Opponent, p, c.X, c.Y);
 						if (!isChecked(opponent, b))
 						{
-							b.Move(opponent.Opponent, p, temp.X, temp.Y);
-							return true;
+                            Console.WriteLine ("blockkkkkkkk");
+                            b.MoveWithoutChecking (opponent.Opponent, p, temp.X, temp.Y);
+                            if (tempPiece != null)
+                                opponent.AddPiece (tempPiece, c);
+                            return true;
 						}
-						b.Move(opponent.Opponent, p, temp.X, temp.Y);
+                        b.MoveWithoutChecking(opponent.Opponent, p, temp.X, temp.Y);
 					}
 				}
 			}
@@ -125,7 +141,7 @@ namespace KingChess
 		{
 			if (isChecked(opponent, b))
 			{
-				if (isOutOfMove(opponent, b) && !CanBlockMate(opponent, b))
+				if (isOutOfMove (opponent, b) && !CanBlockMate (opponent, b))
 					return true;
 			}
 			return false;

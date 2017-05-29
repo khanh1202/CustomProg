@@ -29,7 +29,7 @@ namespace KingChess
 			}
 		}
 
-		public Piece King
+		public King King
 		{
 			get
 			{
@@ -37,7 +37,7 @@ namespace KingChess
 				foreach (Piece p in _pieces)
 					if (p.GetType() == typeof(King))
 						result = p;
-				return result;
+				return result as King;
 			}
 		}
 
@@ -69,7 +69,6 @@ namespace KingChess
         {
             _board = board;
             StartGameDeployment ();
-            AddPieces ();
         }
 
 		public void StartGameDeployment()
@@ -77,61 +76,41 @@ namespace KingChess
 			if (_color == TeamColor.White)
 			{
 				for (int i = 0; i < 8; i++)
-					_board.Cells[i, 1].Piece = new Pawn(TeamColor.White);
-				_board.Cells[0, 0].Piece = new Rook(TeamColor.White);
-				_board.Cells[7, 0].Piece = new Rook(TeamColor.White);
-				_board.Cells[1, 0].Piece = new Knight(TeamColor.White);
-				_board.Cells[6, 0].Piece = new Knight(TeamColor.White);
-				_board.Cells[2, 0].Piece = new Bishop(TeamColor.White);
-				_board.Cells[5, 0].Piece = new Bishop(TeamColor.White);
-				_board.Cells[3, 0].Piece = new Queen(TeamColor.White);
-				_board.Cells[4, 0].Piece = new King(TeamColor.White);
+                    AddPiece(new Pawn(TeamColor.White), _board.Cells[i, 1]);
+                AddPiece(new Rook(TeamColor.White), _board.Cells [0, 0]);
+                AddPiece (new Rook (TeamColor.White), _board.Cells [7, 0]);
+                AddPiece (new Knight (TeamColor.White), _board.Cells [1, 0]);
+                AddPiece (new Knight (TeamColor.White), _board.Cells [6, 0]);
+                AddPiece (new Bishop (TeamColor.White), _board.Cells [2, 0]);
+                AddPiece (new Bishop (TeamColor.White), _board.Cells [5, 0]);
+                AddPiece (new Queen (TeamColor.White), _board.Cells [3, 0]);
+                AddPiece (new King (TeamColor.White), _board.Cells [4, 0]);
 			}
 			else
 			{
-				for (int i = 0; i < 8; i++)
-					_board.Cells[i, 6].Piece = new Pawn(TeamColor.Black);
-				_board.Cells[0, 7].Piece = new Rook(TeamColor.Black);
-				_board.Cells[7, 7].Piece = new Rook(TeamColor.Black);
-				_board.Cells[1, 7].Piece = new Knight(TeamColor.Black);
-				_board.Cells[6, 7].Piece = new Knight(TeamColor.Black);
-				_board.Cells[2, 7].Piece = new Bishop(TeamColor.Black);
-				_board.Cells[5, 7].Piece = new Bishop(TeamColor.Black);
-				_board.Cells[3, 7].Piece = new Queen(TeamColor.Black);
-				_board.Cells[4, 7].Piece = new King(TeamColor.Black);
+                for (int i = 0; i < 8; i++)
+                    AddPiece (new Pawn (TeamColor.Black), _board.Cells [i, 6]);
+                AddPiece (new Rook (TeamColor.Black), _board.Cells [0, 7]);
+                AddPiece (new Rook (TeamColor.Black), _board.Cells [7, 7]);
+                AddPiece (new Knight (TeamColor.Black), _board.Cells [1, 7]);
+                AddPiece (new Knight (TeamColor.Black), _board.Cells [6, 7]);
+                AddPiece (new Bishop (TeamColor.Black), _board.Cells [2, 7]);
+                AddPiece (new Bishop (TeamColor.Black), _board.Cells [5, 7]);
+                AddPiece (new Queen (TeamColor.Black), _board.Cells [3, 7]);
+                AddPiece (new King (TeamColor.Black), _board.Cells [4, 7]);
 			}
 		}
 
-		public void AddPiece(Piece p)
+		public void AddPiece(Piece p, Cell c)
 		{
-			_pieces.Add(p);
+            c.Piece = p;
+            _pieces.Add (p);
 		}
 
-		public void AddPieces()
-		{
-			if (Team == TeamColor.Black)
-			{
-				for (int y = 6; y <= 7; y++)
-					for (int x = 0; x < 8; x++)
-                    {
-                        _pieces.Add (_board.Cells [x, y].Piece);
-                    }
-						
-			}
-			else
-			{
-				for (int y = 0; y <= 1; y++)
-					for (int x = 0; x < 8; x++)
-						_pieces.Add(_board.Cells[x, y].Piece);
-			}
-		}
-
-		public void RemovePiece(Piece p)
-		{
-			_pieces.Remove(p);
-		}
-
-		
-
+        public void RemovePiece (Cell c)
+        {
+            _pieces.Remove (c.Piece);
+            c.RemovePiece (this);
+        }
 	}
 }

@@ -62,12 +62,22 @@ namespace KingChess
 		{
 			if (Cells[x, y].isPossibleMoveOf(p, this))
             {
+                Piece temp = p;
 				_moves.Add(new Move(p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
-                p.Cell.RemovePiece (player.Opponent);
-                Cells [x, y].RemovePiece (player.Opponent);
-                Cells [x, y].Piece = p;
+                player.RemovePiece (p.Cell);
+                player.Opponent.RemovePiece (Cells[x, y]);
+                player.AddPiece (temp, Cells[x, y]);
 			}
 		}
+
+        public void MoveWithoutChecking(Player player, Piece p, int x, int y)
+        {
+			Piece temp = p;
+			_moves.Add (new Move (p, Cells [x, y].Piece, p.Cell, Cells [x, y]));
+			player.RemovePiece (p.Cell);
+			player.Opponent.RemovePiece (Cells [x, y]);
+			player.AddPiece (temp, Cells [x, y]);
+        }
 
 	}
 }

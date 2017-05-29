@@ -20,6 +20,7 @@ namespace KingChess
 
                 if (SwinGame.MouseClicked (MouseButton.LeftButton))
                     game.TakeTheTurn (SwinGame.MousePosition ());
+				game.Update ();
 
                 //Clear the screen and draw the framerate
                 SwinGame.ClearScreen (Color.White);

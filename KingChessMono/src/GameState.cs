@@ -4,6 +4,8 @@ namespace KingChess
     public enum GameState
     {
         Selecting,
-        Moving
+        Moving,
+		Moved,
+		Ended
     }
 }
