@@ -8,12 +8,14 @@ namespace KingChess
 		private Piece _pieceCaptured;
 		private Cell _cellFrom;
 		private Cell _cellTo;
-		public Move(Piece pieceMove, Piece pieceCaptured, Cell cellFrom, Cell cellTo)
+        private Player _playerMove;
+		public Move(Player playerMove, Piece pieceMove, Piece pieceCaptured, Cell cellFrom, Cell cellTo)
 		{
 			_pieceMove = pieceMove;
 			_pieceCaptured = pieceCaptured;
 			_cellFrom = cellFrom;
 			_cellTo = cellTo;
+            _playerMove = playerMove;
 		}
 
 		public Piece PieceMove
@@ -47,6 +49,14 @@ namespace KingChess
 				return _cellTo;
 			}
 		}
+
+        public Player PlayerMove
+        {
+            get
+            {
+                return _playerMove;
+            }
+        }
 
         public string ConvertCellToString(Cell c)
         {

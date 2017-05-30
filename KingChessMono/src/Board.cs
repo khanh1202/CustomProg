@@ -63,7 +63,7 @@ namespace KingChess
 			if (Cells[x, y].isPossibleMoveOf(p, this))
             {
                 Piece temp = p;
-				_moves.Add(new Move(p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
+				_moves.Add(new Move(player, p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
                 player.RemovePiece (p.Cell);
                 player.Opponent.RemovePiece (Cells[x, y]);
                 player.AddPiece (temp, Cells[x, y]);
@@ -73,7 +73,7 @@ namespace KingChess
         public void MoveWithoutChecking(Player player, Piece p, int x, int y)
         {
 			Piece temp = p;
-			_moves.Add (new Move (p, Cells [x, y].Piece, p.Cell, Cells [x, y]));
+			_moves.Add (new Move (player, p, Cells [x, y].Piece, p.Cell, Cells [x, y]));
 			player.RemovePiece (p.Cell);
 			player.Opponent.RemovePiece (Cells [x, y]);
 			player.AddPiece (temp, Cells [x, y]);
@@ -130,6 +130,19 @@ namespace KingChess
 					}
             }
 
+        }
+
+        public void ReverseMove(ChessGame game)
+        {
+            if (_moves.Count == 0)
+                return;
+            Move lastMove = _moves [_moves.Count - 1];
+            MoveWithoutChecking (lastMove.PlayerMove, lastMove.PieceMove, lastMove.CellFrom.X, lastMove.CellFrom.Y);
+            if (lastMove.PieceCaptured != null)
+                lastMove.PlayerMove.Opponent.AddPiece (lastMove.PieceCaptured, lastMove.CellTo);
+            _moves.Remove (_moves [_moves.Count - 1]);
+            _moves.Remove (lastMove);
+            game.ChangeTurn ();
         }
 
 	}

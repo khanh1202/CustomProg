@@ -76,15 +76,15 @@ namespace KingChess
 			if (_color == TeamColor.White)
 			{
 				for (int i = 0; i < 8; i++)
-                    AddPiece(new Pawn(TeamColor.White), _board.Cells[i, 1]);
-                AddPiece(new Rook(TeamColor.White, 1), _board.Cells [0, 0]);
-                AddPiece (new Rook (TeamColor.White, 2), _board.Cells [7, 0]);
-                AddPiece (new Knight (TeamColor.White), _board.Cells [1, 0]);
-                AddPiece (new Knight (TeamColor.White), _board.Cells [6, 0]);
-                AddPiece (new Bishop (TeamColor.White), _board.Cells [2, 0]);
-                AddPiece (new Bishop (TeamColor.White), _board.Cells [5, 0]);
-                AddPiece (new Queen (TeamColor.White), _board.Cells [3, 0]);
-                AddPiece (new King (TeamColor.White), _board.Cells [4, 0]);
+	                AddPiece(new Pawn(TeamColor.White), _board.Cells[i, 1]);
+	            AddPiece(new Rook(TeamColor.White, 1), _board.Cells [0, 0]);
+	            AddPiece (new Rook (TeamColor.White, 2), _board.Cells [7, 0]);
+	            AddPiece (new Knight (TeamColor.White), _board.Cells [1, 0]);
+	            AddPiece (new Knight (TeamColor.White), _board.Cells [6, 0]);
+	            AddPiece (new Bishop (TeamColor.White), _board.Cells [2, 0]);
+	            AddPiece (new Bishop (TeamColor.White), _board.Cells [5, 0]);
+	            AddPiece (new Queen (TeamColor.White), _board.Cells [3, 0]);
+	            AddPiece (new King (TeamColor.White), _board.Cells [4, 0]);
 			}
 			else
 			{
@@ -98,6 +98,7 @@ namespace KingChess
                 AddPiece (new Bishop (TeamColor.Black), _board.Cells [5, 7]);
                 AddPiece (new Queen (TeamColor.Black), _board.Cells [3, 7]);
                 AddPiece (new King (TeamColor.Black), _board.Cells [4, 7]);
+
 			}
 		}
 

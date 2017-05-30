@@ -105,5 +105,12 @@
     <BundleResource Include="Resources\images\White_Pawn.png" />
     <BundleResource Include="Resources\images\White_Queen.png" />
     <BundleResource Include="Resources\images\White_Rook.png" />
+    <BundleResource Include="Resources\images\Background.png" />
+    <BundleResource Include="Resources\images\Background1.png" />
+    <BundleResource Include="Resources\panels\panel1.txt" />
+    <BundleResource Include="Resources\images\Undo_active.png" />
+    <BundleResource Include="Resources\images\Undo_inactive.png" />
+    <BundleResource Include="Resources\images\Replay_inactive.png" />
+    <BundleResource Include="Resources\images\Replay_active.png" />
   </ItemGroup>
 </Project>

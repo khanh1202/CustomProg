@@ -24,6 +24,7 @@ namespace KingChess
 			_players[0].Opponent = _players[1];
 			_players[1].Opponent = _players[0];
             _playerInTurnIndex = 1;
+            _playerwaitingIndex = 0;
             gameBoard = new Board ();
             _state = GameState.Selecting;
 		}
@@ -43,14 +44,26 @@ namespace KingChess
 			SwinGame.LoadBitmapNamed ("BlackBishop", "Black_Bishop.png");
 			SwinGame.LoadBitmapNamed ("BlackQueen", "Black_Queen.png");
 			SwinGame.LoadBitmapNamed ("BlackKing", "Black_King.png");
+            SwinGame.LoadBitmapNamed ("Background", "Background.png");
+			SwinGame.LoadBitmapNamed ("Background1", "Background1.png");
+            SwinGame.LoadBitmapNamed ("Undo_active", "Undo_active.png");
+            SwinGame.LoadBitmapNamed ("Undo_inactive", "Undo_inactive.png");
+            SwinGame.LoadBitmapNamed ("Replay_active", "Replay_active.png");
+            SwinGame.LoadBitmapNamed ("Replay_inactive", "Replay_inactive.png");
         }
 
         public void Draw()
         {
+            DrawBackGround ();
             gameBoard.Draw ();
             _players [0].DrawPieces ();
             _players [1].DrawPieces ();
             _message.Draw (this);
+        }
+
+        public void DrawBackGround()
+        {
+            SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Background1"), 0, 0);
         }
 
 		public Player[] Players
@@ -87,9 +100,22 @@ namespace KingChess
             return null;
         }
 
+        public void HandleReverseMove(Point2D point)
+        {
+            if (SwinGame.PointInRect (point, 570, 350, 30, 30))
+                gameBoard.ReverseMove (this);
+        }
+
+        public void HandleReplay(Point2D point)
+        {
+            int count = gameBoard.Moves.Count;
+            if (SwinGame.PointInRect (point, 700, 350, 30, 30))
+                for (int i = 0; i < count; i++)
+                    gameBoard.ReverseMove (this);
+        }
+
         public void TakeTheTurn(Point2D point)
         {
-			_playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
             if (_state == GameState.Selecting)
             {
                 Cell chosen = FetchCell (point);
@@ -116,11 +142,17 @@ namespace KingChess
                     if (_chosenPiece.GetType () == typeof (King))
                         MoveRookInCastle (_players [_playerInTurnIndex].Team, chosen);
                     _chosenPiece.Deselect ();
-                    _playerInTurnIndex = _playerwaitingIndex;
-					_playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
-				}
+                    ChangeTurn();
+
+                }
             }
 
+        }
+
+        public void ChangeTurn()
+        {
+            _playerInTurnIndex = _playerwaitingIndex;
+            _playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
         }
 
         public void MoveRookInCastle(TeamColor team, Cell cellKingMovedTo)

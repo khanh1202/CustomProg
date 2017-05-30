@@ -52,10 +52,17 @@ namespace KingChess
 
 		}
 
+        public void DrawButtons()
+        {
+			SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Undo_active"), 570, 350);
+			SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Replay_active"), 700, 350);
+        }
+
         public void Draw(ChessGame game)
         {
             DrawCheckingState(game);
             DrawMoves(game.Board.Moves);
+            DrawButtons ();
         }
     }
 }

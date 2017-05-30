@@ -19,7 +19,12 @@ namespace KingChess
                 SwinGame.ProcessEvents();
 
                 if (SwinGame.MouseClicked (MouseButton.LeftButton))
+                {
                     game.TakeTheTurn (SwinGame.MousePosition ());
+                    game.HandleReverseMove (SwinGame.MousePosition ());
+                    game.HandleReplay (SwinGame.MousePosition ());
+                }
+                    
 				game.Update ();
 
                 //Clear the screen and draw the framerate
