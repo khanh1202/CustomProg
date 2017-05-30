@@ -65,6 +65,7 @@
     <Compile Include="src\TeamColor.cs" />
     <Compile Include="src\GameState.cs" />
     <Compile Include="src\TestGame.cs" />
+    <Compile Include="src\Messages.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">

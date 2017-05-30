@@ -112,5 +112,26 @@ namespace KingChess
             _pieces.Remove (c.Piece);
             c.RemovePiece (this);
         }
+
+        public void DrawPieces()
+        {
+			foreach (Piece p in Pieces) {
+				p.Draw ();
+				if (p.isSelected)
+					HighlightCells (p);
+			}
+			foreach (Piece p in Pieces) {
+				p.Draw ();
+				if (p.isSelected)
+					HighlightCells (p);
+			}
+        }
+
+		public void HighlightCells (Piece chosen)
+		{
+			chosen.Cell.DrawOutline ();
+            foreach (Cell c in chosen.GetPossibleMoves (_board))
+				c.DrawOutline ();
+		}
 	}
 }

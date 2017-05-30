@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace KingChess
 {
 	public class Move
@@ -46,5 +47,24 @@ namespace KingChess
 				return _cellTo;
 			}
 		}
+
+        public string ConvertCellToString(Cell c)
+        {
+            string [] yEquivalent = new string [] { "8", "7", "6", "5", "4", "3", "2", "1" };
+            string [] xEquivalent = new string [] { "H", "G", "F", "E", "D", "C", "B", "A" };
+            return xEquivalent [c.X] + yEquivalent [c.Y];
+        }
+
+        public string ConvertPieceToString(Piece p)
+        {
+            Dictionary<Type, string> pieceEquivalent = new Dictionary<Type, string> ();
+            pieceEquivalent.Add (typeof (Pawn), "Pawn");
+            pieceEquivalent.Add (typeof (Rook), "Rook");
+            pieceEquivalent.Add (typeof (Knight), "Knight");
+            pieceEquivalent.Add (typeof (Bishop), "Bishop");
+            pieceEquivalent.Add (typeof (Queen), "Queen");
+            pieceEquivalent.Add (typeof (King), "King");
+            return pieceEquivalent [p.GetType ()];
+        }
 	}
 }

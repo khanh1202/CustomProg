@@ -15,7 +15,7 @@ namespace KingChess
 		private int _playerwaitingIndex;
         private Piece _chosenPiece;
         private GameState _state;
-        private string _message = "WOW";
+        private Messages _message = new Messages();
 
 		public ChessGame()
 		{
@@ -48,19 +48,9 @@ namespace KingChess
         public void Draw()
         {
             gameBoard.Draw ();
-            foreach (Piece p in _players [0].Pieces) 
-            {
-                p.Draw ();
-                if (p.isSelected)
-                    HighlightCells (p);
-            }
-            foreach (Piece p in _players [1].Pieces)
-            {
-                p.Draw ();
-                if (p.isSelected)
-                    HighlightCells (p);
-            }
-            SwinGame.DrawText (_message, Color.Red, 600, 300);
+            _players [0].DrawPieces ();
+            _players [1].DrawPieces ();
+            _message.Draw (this);
         }
 
 		public Player[] Players
@@ -151,32 +141,26 @@ namespace KingChess
             }
         }
 
-        public void HighlightCells (Piece chosen)
-        {
-            chosen.Cell.DrawOutline ();
-            foreach (Cell c in chosen.GetPossibleMoves (gameBoard))
-                c.DrawOutline ();
-        }
-
 		public void Update ()
 		{
-			if (_state == GameState.Moved) 
-			{
-				if (_players [_playerInTurnIndex].King.isChecked (_players [_playerwaitingIndex], gameBoard)) 
-				{
-					Console.WriteLine ("Checked");
-                    if (_players [_playerInTurnIndex].King.isCheckmated (_players [_playerwaitingIndex], gameBoard)) {
-                        _message = "Checkmated";
-                        _state = GameState.Ended;
-                    } 
+            if (_players [_playerInTurnIndex].King == null)
+                _state = GameState.Ended;
+            else
+            {
+				if (_state == GameState.Moved) 
+                {
+					if (_players [_playerInTurnIndex].King.isChecked (_players [_playerwaitingIndex], gameBoard)) 
+                    {
+						if (_players [_playerInTurnIndex].King.isCheckmated (_players [_playerwaitingIndex], gameBoard))
+							_state = GameState.Ended;
+						else
+							_state = GameState.Selecting;
+					} 
                     else
-                        _state = GameState.Selecting;
-				} 
-				else
-					_state = GameState.Selecting;
-			}
+						_state = GameState.Selecting;
+
+				}
+            }
 		}
-
-
 	}
 }

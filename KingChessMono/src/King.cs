@@ -62,14 +62,12 @@ namespace KingChess
 		public bool isChecked(Player opponent, Board b)
 		{
 			bool result = false;
-			for (int i = 0; i < opponent.Pieces.Count; i++)
-			{
-                if (Cell.isPossibleMoveOf(opponent.Pieces[i], b))
-				{
-					_pieceChecking = opponent.Pieces[i];
-					result = true;
-				}
-			}
+            for (int i = 0; i < opponent.Pieces.Count; i++) {
+                    if (Cell.isPossibleMoveOf (opponent.Pieces [i], b)) {
+                        _pieceChecking = opponent.Pieces [i];
+                        result = true;
+                    }
+                }
 			return result;
 		}
 
@@ -197,11 +195,10 @@ namespace KingChess
 		//check if the king is checkmated
 		public bool isCheckmated(Player opponent, Board b)
 		{
-			if (isChecked(opponent, b))
-			{
-				if (isOutOfMove (opponent, b) && !CanBlockMate (opponent, b))
-					return true;
-			}
+            if (isChecked (opponent, b)) {
+                    if (isOutOfMove (opponent, b) && !CanBlockMate (opponent, b))
+                        return true;
+                }
 			return false;
 		}
 
