@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SwinGameSDK;
 using System.Collections.Generic;
 namespace KingChess
@@ -14,7 +15,7 @@ namespace KingChess
         private int _y;
 		private TeamColor _team;
 		private bool _isSelected;
-		private List<Cell> _possibleMoves = new List<Cell>();
+        private static Dictionary<string, Type> _pieceRegistry = new Dictionary<string, Type> ();
 
         public Bitmap MyBitmap()
         {
@@ -51,6 +52,16 @@ namespace KingChess
 					else
 						return SwinGame.BitmapNamed ("WhiteRook");
             }
+        }
+
+        public static void RegisterPiece(string name, Type t)
+        {
+            _pieceRegistry.Add (name, t);
+        }
+
+        public static Piece CreatePiece(string name, TeamColor team, int ID)
+        {
+            return (Piece)Activator.CreateInstance (_pieceRegistry [name], team, ID);
         }
 
         public void Draw()
@@ -150,5 +161,37 @@ namespace KingChess
         }
 
 		public abstract List<Cell> GetPossibleMoves(Board board);
+
+        public string Key(Piece p)
+        {
+            foreach (string s in _pieceRegistry.Keys)
+                if (_pieceRegistry [s] == p.GetType ())
+                    return s;
+            return null;
+        }
+
+        public void Save (StreamWriter writer)
+        {
+            writer.WriteLine (Key (this));
+            writer.WriteLine (Team);
+            writer.WriteLine (ID);
+            writer.WriteLine (X);
+            writer.WriteLine (Y);
+        }
+
+        public static void Load(StreamReader reader, Player[] players)
+        {
+            string pieceType = reader.ReadLine ();
+            TeamColor team = (reader.ReadLine () == "Black") ? TeamColor.Black : TeamColor.White;
+            Console.WriteLine (pieceType);
+            int iD = Convert.ToInt32 (reader.ReadLine ());
+            int x = Convert.ToInt32 (reader.ReadLine ());
+            int y = Convert.ToInt32 (reader.ReadLine ());
+            Piece p = CreatePiece (pieceType, team, iD);
+            if (players [0].Team == team)
+                players [0].AddPiece (p, players [0].Board.Cells [x, y]);
+            else
+                players [1].AddPiece (p, players [1].Board.Cells [x, y]);
+        }
 	}
 }

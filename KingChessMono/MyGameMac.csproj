@@ -64,8 +64,10 @@
     <Compile Include="src\PieceType.cs" />
     <Compile Include="src\TeamColor.cs" />
     <Compile Include="src\GameState.cs" />
-    <Compile Include="src\TestGame.cs" />
     <Compile Include="src\Messages.cs" />
+    <Compile Include="src\ViewingScreen.cs" />
+    <Compile Include="src\Screen.cs" />
+    <Compile Include="src\Menu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">
@@ -112,5 +114,9 @@
     <BundleResource Include="Resources\images\Undo_inactive.png" />
     <BundleResource Include="Resources\images\Replay_inactive.png" />
     <BundleResource Include="Resources\images\Replay_active.png" />
+    <BundleResource Include="Resources\fonts\Chelsea.ttf" />
+    <BundleResource Include="Resources\images\Saving.png" />
+    <BundleResource Include="Resources\images\Load_game.png" />
+    <BundleResource Include="Resources\images\New_game.png" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -112,6 +113,12 @@ namespace KingChess
         {
             _pieces.Remove (c.Piece);
             c.RemovePiece (this);
+        }
+
+        public void ReleasePiece()
+        {
+            for (int i = _pieces.Count - 1; i >= 0; i--)
+                RemovePiece (_pieces [i].Cell);
         }
 
         public void DrawPieces()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SwinGameSDK;
 using System.Collections.Generic;
 namespace KingChess
@@ -143,6 +144,21 @@ namespace KingChess
             _moves.Remove (_moves [_moves.Count - 1]);
             _moves.Remove (lastMove);
             game.ChangeTurn ();
+        }
+
+        public void Save (string filename, Player[] players)
+        {
+            StreamWriter writer;
+            writer = new StreamWriter (filename);
+            Move lastmove = _moves[_moves.Count - 1]; 
+            writer.WriteLine (lastmove.PlayerMove.Opponent.Team);
+            writer.WriteLine (players[1].Pieces.Count + players[1].Pieces.Count);
+            foreach (Piece p in players [0].Pieces)
+                p.Save (writer);
+            foreach (Piece p in players [1].Pieces)
+                p.Save (writer);
+            writer.Close ();
+
         }
 
 	}

@@ -9,31 +9,21 @@ namespace KingChess
         {
             //Open the game window
             SwinGame.OpenGraphicsWindow("GameMain", 800, 600);
-            ChessGame game = new ChessGame ();
-            game.LoadResources ();
-            game.SetUpGame ();
+            Screen screen   = new Screen ();
+            screen.LoadResources ();
             //Run the game loop
             while(false == SwinGame.WindowCloseRequested())
             {
-                //Fetch the next batch of UI interaction
-                SwinGame.ProcessEvents();
-
-                if (SwinGame.MouseClicked (MouseButton.LeftButton))
-                {
-                    game.TakeTheTurn (SwinGame.MousePosition ());
-                    game.HandleReverseMove (SwinGame.MousePosition ());
-                    game.HandleReplay (SwinGame.MousePosition ());
-                }
-                    
-				game.Update ();
+                screen.HandleUserInput ();
 
                 //Clear the screen and draw the framerate
                 SwinGame.ClearScreen (Color.White);
-                game.Draw ();
                 
                 //Draw onto the screen
+                screen.Draw ();
                 SwinGame.RefreshScreen(60);
             }
+            screen.FreeResources ();
         }
     }
 }

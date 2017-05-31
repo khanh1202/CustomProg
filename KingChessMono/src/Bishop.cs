@@ -8,6 +8,11 @@ namespace KingChess
 		{
 		}
 
+        public Bishop(TeamColor color, int ID): base(color, ID)
+        {
+            
+        }
+
         public override PieceType Type
         {
             get

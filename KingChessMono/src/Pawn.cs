@@ -8,6 +8,10 @@ namespace KingChess
 		{
 		}
 
+        public Pawn(TeamColor team, int ID) : base(team, ID)
+        {
+        }
+
         public override PieceType Type
         {
             get

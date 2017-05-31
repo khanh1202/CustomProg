@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SwinGameSDK;
 namespace KingChess
 {
@@ -22,35 +23,16 @@ namespace KingChess
 			_players[0] = new Player(TeamColor.Black);
 			_players[1] = new Player(TeamColor.White);
 			_players[0].Opponent = _players[1];
-			_players[1].Opponent = _players[0];
-            _playerInTurnIndex = 1;
-            _playerwaitingIndex = 0;
+			_players [1].Opponent = _players [0];
             gameBoard = new Board ();
             _state = GameState.Selecting;
+			Piece.RegisterPiece ("Pawn", typeof (Pawn));
+			Piece.RegisterPiece ("Rook", typeof (Rook));
+			Piece.RegisterPiece ("Knight", typeof (Knight));
+			Piece.RegisterPiece ("Bishop", typeof (Bishop));
+			Piece.RegisterPiece ("Queen", typeof (Queen));
+			Piece.RegisterPiece ("King", typeof (King));
 		}
-
-        public void LoadResources()
-        {
-            SwinGame.LoadBitmapNamed ("ChessBoard", "ChessBoard.png");
-            SwinGame.LoadBitmapNamed ("WhitePawn", "White_Pawn.png");
-            SwinGame.LoadBitmapNamed ("WhiteRook", "White_Rook.png");
-            SwinGame.LoadBitmapNamed ("WhiteKnight", "White_Knight.png");
-            SwinGame.LoadBitmapNamed ("WhiteBishop", "White_Bishop.png");
-            SwinGame.LoadBitmapNamed ("WhiteQueen", "White_Queen.png");
-            SwinGame.LoadBitmapNamed ("WhiteKing", "White_King.png");
-			SwinGame.LoadBitmapNamed ("BlackPawn", "Black_Pawn.png");
-			SwinGame.LoadBitmapNamed ("BlackRook", "Black_Rook.png");
-			SwinGame.LoadBitmapNamed ("BlackKnight", "Black_Knight.png");
-			SwinGame.LoadBitmapNamed ("BlackBishop", "Black_Bishop.png");
-			SwinGame.LoadBitmapNamed ("BlackQueen", "Black_Queen.png");
-			SwinGame.LoadBitmapNamed ("BlackKing", "Black_King.png");
-            SwinGame.LoadBitmapNamed ("Background", "Background.png");
-			SwinGame.LoadBitmapNamed ("Background1", "Background1.png");
-            SwinGame.LoadBitmapNamed ("Undo_active", "Undo_active.png");
-            SwinGame.LoadBitmapNamed ("Undo_inactive", "Undo_inactive.png");
-            SwinGame.LoadBitmapNamed ("Replay_active", "Replay_active.png");
-            SwinGame.LoadBitmapNamed ("Replay_inactive", "Replay_inactive.png");
-        }
 
         public void Draw()
         {
@@ -64,6 +46,14 @@ namespace KingChess
         public void DrawBackGround()
         {
             SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Background1"), 0, 0);
+        }
+
+        public Player PlayerInturn
+        {
+            get
+            {
+                return _players [_playerInTurnIndex];
+            }
         }
 
 		public Player[] Players
@@ -87,7 +77,29 @@ namespace KingChess
             _players [0].SetupPlayer (gameBoard);
             _players [1].SetupPlayer (gameBoard);
 			_playerInTurnIndex = 1;
+            _playerwaitingIndex = 0;
 		}
+
+        public void ReleaseGame()
+        {
+            _players [0].ReleasePiece ();
+            _players [1].ReleasePiece ();
+        }
+
+        public void LoadGame(string filename)
+        {
+            ReleaseGame ();
+            StreamReader reader = new StreamReader (filename);
+            string playertomove = reader.ReadLine ();
+            if (playertomove == "White")
+                _playerInTurnIndex = 1;
+            else
+                _playerInTurnIndex = 0;
+            int numOfPieces = Convert.ToInt32 (reader.ReadLine ());
+            for (int i = 0; i < numOfPieces; i++)
+                Piece.Load (reader, _players);
+            reader.Close ();
+        }
 
         public Cell FetchCell(Point2D point)
         {
@@ -102,17 +114,36 @@ namespace KingChess
 
         public void HandleReverseMove(Point2D point)
         {
-            if (SwinGame.PointInRect (point, 570, 350, 30, 30))
+            if (SwinGame.PointInRect (point, 600, 350, 30, 30))
+            {
                 gameBoard.ReverseMove (this);
+                if (_state == GameState.Ended)
+                    _state = GameState.Selecting;
+			}
+                
         }
 
         public void HandleReplay(Point2D point)
         {
             int count = gameBoard.Moves.Count;
-            if (SwinGame.PointInRect (point, 700, 350, 30, 30))
-                for (int i = 0; i < count; i++)
-                    gameBoard.ReverseMove (this);
+            if (SwinGame.PointInRect (point, 730, 350, 30, 30))
+            {
+				for (int i = 0; i < count; i++)
+					gameBoard.ReverseMove (this);
+                _state = GameState.Selecting;
+            }
         }
+
+        public void HandleSaving(Point2D point)
+        {
+            if (SwinGame.PointInRect (point, 660, 450, 40, 42))
+                gameBoard.Save ("Users/mac/Desktop/chess.txt", _players);      
+        }
+
+		public void HandleLoading ()
+		{
+             LoadGame ("/Users/mac/Desktop/chess.txt");			
+		}
 
         public void TakeTheTurn(Point2D point)
         {
