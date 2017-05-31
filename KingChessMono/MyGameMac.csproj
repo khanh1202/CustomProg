@@ -118,5 +118,8 @@
     <BundleResource Include="Resources\images\Saving.png" />
     <BundleResource Include="Resources\images\Load_game.png" />
     <BundleResource Include="Resources\images\New_game.png" />
+    <BundleResource Include="Resources\images\Mainmenu.png" />
+    <BundleResource Include="Resources\images\Save1.png" />
+    <BundleResource Include="Resources\images\Quit.png" />
   </ItemGroup>
 </Project>

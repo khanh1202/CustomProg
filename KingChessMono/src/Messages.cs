@@ -56,7 +56,8 @@ namespace KingChess
         {
 			SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Undo_active"), 600, 350);
 			SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Replay_active"), 730, 350);
-            SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Save"), 660, 450);
+            SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Save1"), 600, 450);
+            SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Mainmenu"), 600, 500);
         }
 
         public void DrawWinner(ChessGame game)

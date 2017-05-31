@@ -12,7 +12,7 @@ namespace KingChess
             Screen screen   = new Screen ();
             screen.LoadResources ();
             //Run the game loop
-            while(false == SwinGame.WindowCloseRequested())
+            while(false == SwinGame.WindowCloseRequested() && screen.ViewingScreen != ViewingScreen.QUITTING)
             {
                 screen.HandleUserInput ();
 

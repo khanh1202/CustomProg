@@ -6,7 +6,7 @@ namespace KingChess
 	{
         public const int BOTTOM_LEFT_CELL_X = 42;
         public const int BOTTOM_LEFT_CELL_Y = 448;
-        public const int CELL_WIDTH = 57;
+        public const int CELL_WIDTH = 58;
 		private int _x;
 		private int _y;
 		private Piece _piece = null;

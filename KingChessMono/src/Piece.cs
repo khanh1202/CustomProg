@@ -64,6 +64,11 @@ namespace KingChess
             return (Piece)Activator.CreateInstance (_pieceRegistry [name], team, ID);
         }
 
+        public static void ClearPieceRegistry()
+        {
+            _pieceRegistry.Clear ();
+        }
+
         public void Draw()
         {
             SwinGame.DrawBitmap (MyBitmap (), BOTTOM_LEFT_CELL_X + Cell.X * CELL_WIDTH, BOTTOM_LEFT_CELL_Y - Cell.Y * CELL_WIDTH);

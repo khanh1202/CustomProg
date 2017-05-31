@@ -12,7 +12,6 @@ namespace KingChess
             _viewing = ViewingScreen.MENUSCREEN;
             _menu = new Menu ();
             _game = new ChessGame ();
-            _game.SetUpGame ();
         }
 
         public ViewingScreen ViewingScreen
@@ -64,9 +63,11 @@ namespace KingChess
 			SwinGame.LoadBitmapNamed ("Undo_inactive", "Undo_inactive.png");
 			SwinGame.LoadBitmapNamed ("Replay_active", "Replay_active.png");
 			SwinGame.LoadBitmapNamed ("Replay_inactive", "Replay_inactive.png");
-			SwinGame.LoadBitmapNamed ("Save", "Saving.png");
+			SwinGame.LoadBitmapNamed ("Save1", "Save1.png");
+            SwinGame.LoadBitmapNamed ("Mainmenu", "Mainmenu.png");
             SwinGame.LoadBitmapNamed ("Newgame", "New_game.png");
             SwinGame.LoadBitmapNamed ("Loadgame", "Load_game.png");
+            SwinGame.LoadBitmapNamed ("Quit", "Quit.png");
 			SwinGame.LoadFontNamed ("Chelsea", "Chelsea.ttf", 15);
 		}
 
@@ -87,6 +88,7 @@ namespace KingChess
 						_game.HandleReverseMove (SwinGame.MousePosition ());
 						_game.HandleReplay (SwinGame.MousePosition ());
 						_game.HandleSaving (SwinGame.MousePosition ());
+                        _game.HandleBackScreen (SwinGame.MousePosition (), this);
 					}
                     _game.Update ();
                     break;

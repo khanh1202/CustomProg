@@ -26,6 +26,7 @@ namespace KingChess
 			_players [1].Opponent = _players [0];
             gameBoard = new Board ();
             _state = GameState.Selecting;
+            Piece.ClearPieceRegistry ();
 			Piece.RegisterPiece ("Pawn", typeof (Pawn));
 			Piece.RegisterPiece ("Rook", typeof (Rook));
 			Piece.RegisterPiece ("Knight", typeof (Knight));
@@ -84,6 +85,7 @@ namespace KingChess
         {
             _players [0].ReleasePiece ();
             _players [1].ReleasePiece ();
+            gameBoard.ReleaseMove ();
         }
 
         public void LoadGame(string filename)
@@ -136,7 +138,7 @@ namespace KingChess
 
         public void HandleSaving(Point2D point)
         {
-            if (SwinGame.PointInRect (point, 660, 450, 40, 42))
+            if (SwinGame.PointInRect (point, 600, 450, 163, 50))
                 gameBoard.Save ("Users/mac/Desktop/chess.txt", _players);      
         }
 
@@ -178,6 +180,14 @@ namespace KingChess
                 }
             }
 
+        }
+
+        public void HandleBackScreen(Point2D point, Screen screen)
+        {
+            if (SwinGame.PointInRect (point, 600, 500, 163, 50))
+            {
+                screen.ChangeScreenViewing (ViewingScreen.MENUSCREEN);
+            }
         }
 
         public void ChangeTurn()

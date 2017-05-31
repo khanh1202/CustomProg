@@ -8,13 +8,14 @@ namespace KingChess
 	{
 		private const int _WIDTH = 8;
 		private const int _HEIGHT = 8;
-		private List<Move> _moves = new List<Move>();
+		private List<Move> _moves;
 		private Cell[,] cells = new Cell[_WIDTH, _HEIGHT];
 		public Board()
 		{
 			for (int i = 0; i < _WIDTH; i++)
 				for (int j = 0; j < _HEIGHT; j++)
 					cells[i, j] = new Cell(i, j, null);
+            _moves = new List<Move> ();
 		}
 
 		public Cell[,] Cells
@@ -152,13 +153,18 @@ namespace KingChess
             writer = new StreamWriter (filename);
             Move lastmove = _moves[_moves.Count - 1]; 
             writer.WriteLine (lastmove.PlayerMove.Opponent.Team);
-            writer.WriteLine (players[1].Pieces.Count + players[1].Pieces.Count);
+            writer.WriteLine (players[1].Pieces.Count + players[0].Pieces.Count);
             foreach (Piece p in players [0].Pieces)
                 p.Save (writer);
             foreach (Piece p in players [1].Pieces)
                 p.Save (writer);
             writer.Close ();
 
+        }
+
+        public void ReleaseMove()
+        {
+            _moves.Clear ();
         }
 
 	}
