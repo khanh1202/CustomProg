@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using SwinGameSDK;
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -140,6 +141,54 @@ namespace KingChess
 			chosen.Cell.DrawOutline ();
             foreach (Cell c in chosen.GetPossibleMoves (_board))
 				c.DrawOutline ();
+		}
+
+        public void TakeTurn(Point2D point, ChessGame game)
+        {
+            if (game.State == GameState.Selecting)
+            {
+                Cell chosen = game.FetchCell (point);
+                if (chosen != null && chosen.Piece != null && _pieces.Contains (chosen.Piece))
+                {
+                    game.ChangeState (GameState.Moving);
+                    chosen.Piece.Select ();
+                    game.SetChosenPiece (chosen.Piece);
+                }
+            } 
+            else if (game.State == GameState.Moving)
+            {
+                Cell chosen = game.FetchCell (point);
+                if (chosen.Piece != null && chosen.Piece.isSelected)
+                {
+                    game.ChangeState (GameState.Selecting);
+                    chosen.Piece.Deselect ();
+                } 
+                else if (chosen.isPossibleMoveOf (game.ChosenPiece, _board))
+                {
+                    game.ChangeState (GameState.Moved);
+                    _board.Move (this, game.ChosenPiece, chosen.X, chosen.Y);
+                    if (game.ChosenPiece.GetType () == typeof (King))
+                        MoveRookInCastle (_color, chosen);
+                    game.ChosenPiece.Deselect ();
+                    game.ChangeTurn ();
+                }
+            }
+        }
+
+		public void MoveRookInCastle (TeamColor team, Cell cellKingMovedTo)
+		{
+			if (team == TeamColor.White) {
+                if (cellKingMovedTo == _board.Cells [2, 0])
+                    _board.MoveWithoutChecking (this, _board.Cells [0, 0].Piece, 3, 0);
+                if (cellKingMovedTo == _board.Cells [6, 0])
+                    _board.MoveWithoutChecking (this, _board.Cells [7, 0].Piece, 5, 0);
+			}
+			if (team == TeamColor.Black) {
+                if (cellKingMovedTo == _board.Cells [2, 7])
+                    _board.MoveWithoutChecking (this, _board.Cells [0, 7].Piece, 3, 7);
+                if (cellKingMovedTo == _board.Cells [6, 7])
+                    _board.MoveWithoutChecking (this, _board.Cells [7, 7].Piece, 5, 7);
+			}
 		}
 	}
 }

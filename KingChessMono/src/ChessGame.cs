@@ -73,6 +73,27 @@ namespace KingChess
             }
         }
 
+        public GameState State
+        {
+            get
+            {
+                return _state;
+            }
+        }
+
+        public Piece ChosenPiece
+        {
+            get
+            {
+                return _chosenPiece;
+            }
+        }
+
+        public void SetChosenPiece(Piece p)
+        {
+            _chosenPiece = p;
+        }
+
 		public void SetUpGame()
 		{
             _players [0].SetupPlayer (gameBoard);
@@ -149,37 +170,7 @@ namespace KingChess
 
         public void TakeTheTurn(Point2D point)
         {
-            if (_state == GameState.Selecting)
-            {
-                Cell chosen = FetchCell (point);
-                if (chosen != null && chosen.Piece != null && _players[_playerInTurnIndex].Pieces.Contains (chosen.Piece))
-                {
-                    _state = GameState.Moving;
-                    chosen.Piece.Select ();
-                    _chosenPiece = chosen.Piece;
-                }
-            }
-            else if (_state == GameState.Moving)
-            {
-				
-				Cell chosen = FetchCell (point);
-				if (chosen.Piece != null && chosen.Piece.isSelected) 
-				{
-					_state = GameState.Selecting;
-					chosen.Piece.Deselect ();
-				} 
-				else if (chosen.isPossibleMoveOf (_chosenPiece, gameBoard)) 
-				{
-					_state = GameState.Moved;
-					gameBoard.Move (_players [_playerInTurnIndex], _chosenPiece, chosen.X, chosen.Y);
-                    if (_chosenPiece.GetType () == typeof (King))
-                        MoveRookInCastle (_players [_playerInTurnIndex].Team, chosen);
-                    _chosenPiece.Deselect ();
-                    ChangeTurn();
-
-                }
-            }
-
+            _players [_playerInTurnIndex].TakeTurn (point, this);
         }
 
         public void HandleBackScreen(Point2D point, Screen screen)
@@ -196,22 +187,9 @@ namespace KingChess
             _playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
         }
 
-        public void MoveRookInCastle(TeamColor team, Cell cellKingMovedTo)
+        public void ChangeState(GameState state)
         {
-            if (team == TeamColor.White)
-            {
-                if (cellKingMovedTo == gameBoard.Cells [2, 0])
-                    gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [0, 0].Piece, 3, 0);
-                if (cellKingMovedTo == gameBoard.Cells [6, 0])
-                    gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [7, 0].Piece, 5, 0);
-            }
-            if (team == TeamColor.Black)
-            {
-				if (cellKingMovedTo == gameBoard.Cells [2, 7])
-					gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [0, 7].Piece, 3, 7);
-				if (cellKingMovedTo == gameBoard.Cells [6, 7])
-					gameBoard.MoveWithoutChecking (_players [_playerInTurnIndex], gameBoard.Cells [7, 7].Piece, 5, 7);
-            }
+            _state = state;
         }
 
 		public void Update ()
