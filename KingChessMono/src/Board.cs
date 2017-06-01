@@ -60,15 +60,15 @@ namespace KingChess
             SwinGame.DrawBitmap (MyBitmap (), 0, 0);
         }
 
-		public void Move(Player player, Piece p, int x, int y)
+		public void Move(Move m)
 		{
-			if (Cells[x, y].isPossibleMoveOf(p, this))
+            if (m.CellTo.isPossibleMoveOf(m.PieceMove, this))
             {
-                Piece temp = p;
-				_moves.Add(new Move(player, p, Cells[x, y].Piece, p.Cell, Cells[x, y]));
-                player.RemovePiece (p.Cell);
-                player.Opponent.RemovePiece (Cells[x, y]);
-                player.AddPiece (temp, Cells[x, y]);
+                Piece temp = m.PieceMove;
+				_moves.Add(m);
+                m.PlayerMove.RemovePiece (m.PieceMove.Cell);
+                m.PlayerMove.Opponent.RemovePiece (m.CellTo);
+                m.PlayerMove.AddPiece (temp, m.CellTo);
 			}
 		}
 
@@ -147,16 +147,17 @@ namespace KingChess
             game.ChangeTurn ();
         }
 
-        public void Save (string filename, Player[] players)
+        public void Save (string filename, ChessGame game)
         {
             StreamWriter writer;
             writer = new StreamWriter (filename);
+            writer.WriteLine (game.State);
             Move lastmove = _moves[_moves.Count - 1]; 
             writer.WriteLine (lastmove.PlayerMove.Opponent.Team);
-            writer.WriteLine (players[1].Pieces.Count + players[0].Pieces.Count);
-            foreach (Piece p in players [0].Pieces)
+            writer.WriteLine (game.Players[1].Pieces.Count + game.Players[0].Pieces.Count);
+            foreach (Piece p in game.Players [0].Pieces)
                 p.Save (writer);
-            foreach (Piece p in players [1].Pieces)
+            foreach (Piece p in game.Players [1].Pieces)
                 p.Save (writer);
             writer.Close ();
 

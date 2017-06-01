@@ -67,9 +67,8 @@ namespace KingChess
             }
 		}
 
-        public void SetupPlayer(Board board)
+        public void SetupPlayer()
         {
-            _board = board;
             StartGameDeployment ();
         }
 
@@ -166,7 +165,8 @@ namespace KingChess
                 else if (chosen.isPossibleMoveOf (game.ChosenPiece, _board))
                 {
                     game.ChangeState (GameState.Moved);
-                    _board.Move (this, game.ChosenPiece, chosen.X, chosen.Y);
+                    //_board.Move (this, game.ChosenPiece, chosen.X, chosen.Y);
+                    _board.Move (new Move (this, game.ChosenPiece, chosen.Piece, game.ChosenPiece.Cell, chosen));
                     if (game.ChosenPiece.GetType () == typeof (King))
                         MoveRookInCastle (_color, chosen);
                     game.ChosenPiece.Deselect ();

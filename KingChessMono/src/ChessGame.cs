@@ -25,6 +25,8 @@ namespace KingChess
 			_players[0].Opponent = _players[1];
 			_players [1].Opponent = _players [0];
             gameBoard = new Board ();
+            _players [0].Board = gameBoard;
+            _players [1].Board = gameBoard;
             _state = GameState.Selecting;
             Piece.ClearPieceRegistry ();
 			Piece.RegisterPiece ("Pawn", typeof (Pawn));
@@ -96,8 +98,8 @@ namespace KingChess
 
 		public void SetUpGame()
 		{
-            _players [0].SetupPlayer (gameBoard);
-            _players [1].SetupPlayer (gameBoard);
+            _players [0].SetupPlayer ();
+            _players [1].SetupPlayer ();
 			_playerInTurnIndex = 1;
             _playerwaitingIndex = 0;
 		}
@@ -113,11 +115,14 @@ namespace KingChess
         {
             ReleaseGame ();
             StreamReader reader = new StreamReader (filename);
+            string gamestate = reader.ReadLine ();
+                _state = (GameState)Enum.Parse (typeof(GameState), gamestate);
             string playertomove = reader.ReadLine ();
             if (playertomove == "White")
                 _playerInTurnIndex = 1;
             else
                 _playerInTurnIndex = 0;
+            _playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
             int numOfPieces = Convert.ToInt32 (reader.ReadLine ());
             for (int i = 0; i < numOfPieces; i++)
                 Piece.Load (reader, _players);
@@ -160,7 +165,7 @@ namespace KingChess
         public void HandleSaving(Point2D point)
         {
             if (SwinGame.PointInRect (point, 600, 450, 163, 50))
-                gameBoard.Save ("Users/mac/Desktop/chess.txt", _players);      
+                gameBoard.Save ("Users/mac/Desktop/chess.txt", this);      
         }
 
 		public void HandleLoading ()
@@ -185,6 +190,11 @@ namespace KingChess
         {
             _playerInTurnIndex = _playerwaitingIndex;
             _playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
+        }
+
+        public void ChangeTurn(Player player)
+        {
+            _playerInTurnIndex = (player.Team == TeamColor.Black) ? 0 : 1;
         }
 
         public void ChangeState(GameState state)
