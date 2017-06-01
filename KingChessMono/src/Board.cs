@@ -72,13 +72,14 @@ namespace KingChess
 			}
 		}
 
-        public void MoveWithoutChecking(Player player, Piece p, int x, int y)
+        public void MoveWithoutChecking(Move m, bool isACastle)
         {
-			Piece temp = p;
-			_moves.Add (new Move (player, p, Cells [x, y].Piece, p.Cell, Cells [x, y]));
-			player.RemovePiece (p.Cell);
-			player.Opponent.RemovePiece (Cells [x, y]);
-			player.AddPiece (temp, Cells [x, y]);
+			Piece temp = m.PieceMove;
+            if (!isACastle)
+			    _moves.Add (m);
+			m.PlayerMove.RemovePiece (m.PieceMove.Cell);
+			m.PlayerMove.Opponent.RemovePiece (m.CellTo);
+			m.PlayerMove.AddPiece (temp, m.CellTo);
         }
 
 		public bool isKingMovedBefore (TeamColor team)
@@ -139,7 +140,7 @@ namespace KingChess
             if (_moves.Count == 0)
                 return;
             Move lastMove = _moves [_moves.Count - 1];
-            MoveWithoutChecking (lastMove.PlayerMove, lastMove.PieceMove, lastMove.CellFrom.X, lastMove.CellFrom.Y);
+            MoveWithoutChecking (new Move (lastMove.PlayerMove, lastMove.PieceMove, null, lastMove.CellTo, lastMove.CellFrom), false);
             if (lastMove.PieceCaptured != null)
                 lastMove.PlayerMove.Opponent.AddPiece (lastMove.PieceCaptured, lastMove.CellTo);
             _moves.Remove (_moves [_moves.Count - 1]);
