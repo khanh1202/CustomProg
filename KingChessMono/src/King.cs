@@ -30,6 +30,16 @@ namespace KingChess
 			}
 		}
 
+        public override int Value
+        {
+            get
+            {
+                if (Team == TeamColor.Black)
+                    return 20000;
+                return -20000;
+            }
+        }
+
 		//get the possible moves of the King
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
@@ -42,7 +52,7 @@ namespace KingChess
 					if (board.Cells[possiblePosX[i], possiblePosY[i]].Piece == null || board.Cells[possiblePosX[i], possiblePosY[i]].Piece.Team != Team)
 					possiblemoves.Add(board.Cells[possiblePosX[i], possiblePosY[i]]);
 			}
-            if (!board.isKingMovedBefore (Team))
+            if (board.timesKingMovedBefore (Team) == 0)
             {
                 if (!board.isRookMovedBefore (Team, 1) && board.AreTwoPiecesNotBlocked (Team, 1))
                 {

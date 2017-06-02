@@ -17,10 +17,15 @@ namespace KingChess
         private Piece _chosenPiece;
         private GameState _state;
         private Messages _message = new Messages();
+        private bool _isAI;
 
-		public ChessGame()
+        public ChessGame(bool AI)
 		{
-			_players[0] = new Player(TeamColor.Black);
+            if (AI)
+                _players [0] = new AIPlayer (TeamColor.Black);
+            else
+                _players [0] = new Player (TeamColor.Black);
+            _isAI = AI;
 			_players[1] = new Player(TeamColor.White);
 			_players[0].Opponent = _players[1];
 			_players [1].Opponent = _players [0];
@@ -91,6 +96,14 @@ namespace KingChess
             }
         }
 
+        public bool isAI
+        {
+            get
+            {
+                return _isAI;
+            }
+        }
+
         public void SetChosenPiece(Piece p)
         {
             _chosenPiece = p;
@@ -115,6 +128,7 @@ namespace KingChess
         {
             ReleaseGame ();
             StreamReader reader = new StreamReader (filename);
+            reader.ReadLine ();
             string gamestate = reader.ReadLine ();
                 _state = (GameState)Enum.Parse (typeof(GameState), gamestate);
             string playertomove = reader.ReadLine ();
@@ -144,11 +158,16 @@ namespace KingChess
         {
             if (SwinGame.PointInRect (point, 600, 350, 30, 30))
             {
-                gameBoard.ReverseMove (this);
+                if (_isAI)
+                {
+                    gameBoard.ReverseMove (this, false);
+                    gameBoard.ReverseMove (this, false);
+                }
+                else 
+                    gameBoard.ReverseMove (this, true);
                 if (_state == GameState.Ended)
                     _state = GameState.Selecting;
 			}
-                
         }
 
         public void HandleReplay(Point2D point)
@@ -157,7 +176,7 @@ namespace KingChess
             if (SwinGame.PointInRect (point, 730, 350, 30, 30))
             {
 				for (int i = 0; i < count; i++)
-					gameBoard.ReverseMove (this);
+					gameBoard.ReverseMove (this, true);
                 _state = GameState.Selecting;
             }
         }
@@ -176,6 +195,7 @@ namespace KingChess
         public void TakeTheTurn(Point2D point)
         {
             _players [_playerInTurnIndex].TakeTurn (point, this);
+
         }
 
         public void HandleBackScreen(Point2D point, Screen screen)
@@ -190,11 +210,6 @@ namespace KingChess
         {
             _playerInTurnIndex = _playerwaitingIndex;
             _playerwaitingIndex = (_playerInTurnIndex + 1) % 2;
-        }
-
-        public void ChangeTurn(Player player)
-        {
-            _playerInTurnIndex = (player.Team == TeamColor.Black) ? 0 : 1;
         }
 
         public void ChangeState(GameState state)
@@ -219,7 +234,6 @@ namespace KingChess
 					} 
                     else
 						_state = GameState.Selecting;
-
 				}
             }
 		}

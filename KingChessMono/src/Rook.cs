@@ -15,6 +15,17 @@ namespace KingChess
                 return PieceType.Rook;
             }
         }
+
+        public override int Value 
+        {
+			get 
+            {
+				if (Team == TeamColor.Black)
+					return 500;
+				return -500;
+			}
+		}
+
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();

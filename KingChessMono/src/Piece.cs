@@ -125,6 +125,11 @@ namespace KingChess
 			}
 		}
 
+        public abstract int Value
+        {
+            get;
+        }
+
         public void Deployed(Cell c)
         {
             if (c != null)

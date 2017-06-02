@@ -19,6 +19,16 @@ namespace KingChess
                 return PieceType.Knight;
             }
         }
+
+        public override int Value
+        {
+            get
+            {
+                if (Team == TeamColor.Black)
+                    return 320;
+                return -320;
+            }
+        }
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();

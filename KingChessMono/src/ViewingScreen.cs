@@ -5,6 +5,7 @@ namespace KingChess
     {
         MENUSCREEN,
         NEWGAMESCREEN,
+        GAMEVSAISCREEN,
         LOADGAMESCREEN,
         QUITTING
     }

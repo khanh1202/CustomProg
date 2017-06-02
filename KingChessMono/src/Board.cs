@@ -82,13 +82,15 @@ namespace KingChess
 			m.PlayerMove.AddPiece (temp, m.CellTo);
         }
 
-		public bool isKingMovedBefore (TeamColor team)
+		public int timesKingMovedBefore (TeamColor team)
 		{
-			foreach (Move m in _moves) {
-				if (m.PieceMove.GetType () == typeof (King) && m.PieceMove.Team == team)
-					return true;
-			}
-			return false;
+            int result = 0;
+            foreach (Move m in _moves) 
+            {
+                if (m.PieceMove.GetType () == typeof (King) && m.PieceMove.Team == team)
+                    result++;
+            }
+            return result;
 		}
 
         public bool isRookMovedBefore(TeamColor team, int ID)
@@ -135,7 +137,7 @@ namespace KingChess
 
         }
 
-        public void ReverseMove(ChessGame game)
+        public void ReverseMove(ChessGame game, bool isTurnChanged)
         {
             if (_moves.Count == 0)
                 return;
@@ -145,13 +147,18 @@ namespace KingChess
                 lastMove.PlayerMove.Opponent.AddPiece (lastMove.PieceCaptured, lastMove.CellTo);
             _moves.Remove (_moves [_moves.Count - 1]);
             _moves.Remove (lastMove);
-            game.ChangeTurn ();
+            if (isTurnChanged)
+                game.ChangeTurn ();
         }
 
         public void Save (string filename, ChessGame game)
         {
             StreamWriter writer;
             writer = new StreamWriter (filename);
+            if (game.isAI)
+                writer.WriteLine ("AI");
+            else
+                writer.WriteLine ("Human");
             writer.WriteLine (game.State);
             Move lastmove = _moves[_moves.Count - 1]; 
             writer.WriteLine (lastmove.PlayerMove.Opponent.Team);

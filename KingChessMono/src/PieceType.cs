@@ -3,6 +3,11 @@ namespace KingChess
 {
 	public enum PieceType
 	{
-		Pawn, Rook, Knight, Bishop, Queen, King
+		Pawn,
+        Rook,
+        Knight,
+        Bishop,
+        Queen,
+        King
 	}
 }

@@ -11,7 +11,6 @@ namespace KingChess
         {
             _viewing = ViewingScreen.MENUSCREEN;
             _menu = new Menu ();
-            _game = new ChessGame ();
         }
 
         public ViewingScreen ViewingScreen
@@ -42,6 +41,11 @@ namespace KingChess
             }
         }
 
+        public void CreateGame(bool AI)
+        {
+            _game = new ChessGame (AI);
+        }
+
 		public void LoadResources ()
 		{
 			SwinGame.LoadBitmapNamed ("ChessBoard", "ChessBoard.png");
@@ -67,6 +71,7 @@ namespace KingChess
             SwinGame.LoadBitmapNamed ("Mainmenu", "Mainmenu.png");
             SwinGame.LoadBitmapNamed ("Newgame", "New_game.png");
             SwinGame.LoadBitmapNamed ("Loadgame", "Load_game.png");
+            SwinGame.LoadBitmapNamed ("AI", "AI.png");
             SwinGame.LoadBitmapNamed ("Quit", "Quit.png");
 			SwinGame.LoadFontNamed ("Chelsea", "Chelsea.ttf", 15);
 		}
@@ -76,20 +81,25 @@ namespace KingChess
 			SwinGame.FreeFont (SwinGame.FontNamed ("Chelsea"));
 		}
 
+        public void HandleGame()
+        {
+            if (SwinGame.MouseClicked (MouseButton.LeftButton))
+            {
+				_game.TakeTheTurn (SwinGame.MousePosition ());
+				_game.HandleReverseMove (SwinGame.MousePosition ());
+				_game.HandleReplay (SwinGame.MousePosition ());
+				_game.HandleSaving (SwinGame.MousePosition ());
+				_game.HandleBackScreen (SwinGame.MousePosition (), this);
+            }
+        }
+
         public void HandleUserInput()
         {
             SwinGame.ProcessEvents ();
             switch (_viewing)
             {
                 case ViewingScreen.NEWGAMESCREEN:
-					if (SwinGame.MouseClicked (MouseButton.LeftButton)) 
-	                {
-						_game.TakeTheTurn (SwinGame.MousePosition ());
-						_game.HandleReverseMove (SwinGame.MousePosition ());
-						_game.HandleReplay (SwinGame.MousePosition ());
-						_game.HandleSaving (SwinGame.MousePosition ());
-                        _game.HandleBackScreen (SwinGame.MousePosition (), this);
-					}
+	                HandleGame ();
                     _game.Update ();
                     break;
                 case ViewingScreen.MENUSCREEN:
@@ -99,6 +109,10 @@ namespace KingChess
                 case ViewingScreen.LOADGAMESCREEN:
                     _game.HandleLoading ();
                     _viewing = ViewingScreen.NEWGAMESCREEN;
+                    break;
+	            case ViewingScreen.GAMEVSAISCREEN:
+                    HandleGame ();
+                    _game.Update ();
                     break;
                     
             }
@@ -114,6 +128,9 @@ namespace KingChess
                 case ViewingScreen.LOADGAMESCREEN:
                     _game.Draw ();
                     break;
+                case ViewingScreen.GAMEVSAISCREEN:
+	                _game.Draw ();
+	                break;
                 case ViewingScreen.MENUSCREEN:
                     _menu.Draw ();
                     break;

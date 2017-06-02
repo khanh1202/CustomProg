@@ -1,27 +1,28 @@
 ﻿<Properties StartupConfiguration="{871B5A90-103A-46A5-BBB9-07C02B9851D1}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/Rook.cs">
     <Files>
       <File FileName="Resources/panels/FileDialog.txt" Line="1" Column="1" />
-      <File FileName="src/ChessGame.cs" Line="129" Column="29" />
-      <File FileName="src/Board.cs" Line="98" Column="16" />
+      <File FileName="src/ChessGame.cs" Line="225" Column="14" />
+      <File FileName="src/Board.cs" Line="66" Column="14" />
       <File FileName="src/Move.cs" Line="57" Column="36" />
-      <File FileName="src/King.cs" Line="33" Column="23" />
+      <File FileName="src/King.cs" Line="39" Column="30" />
       <File FileName="src/GameMain.cs" Line="15" Column="109" />
       <File FileName="src/Messages.cs" Line="60" Column="77" />
-      <File FileName="src/Player.cs" Line="88" Column="73" />
-      <File FileName="src/Piece.cs" Line="190" Column="42" />
+      <File FileName="src/Player.cs" Line="128" Column="41" />
+      <File FileName="src/Piece.cs" Line="130" Column="17" />
       <File FileName="src/Cell.cs" Line="9" Column="41" />
-      <File FileName="src/Rook.cs" Line="9" Column="4" />
-      <File FileName="src/Bishop.cs" Line="13" Column="13" />
-      <File FileName="src/Knight.cs" Line="12" Column="10" />
-      <File FileName="src/Pawn.cs" Line="11" Column="56" />
-      <File FileName="src/Queen.cs" Line="12" Column="10" />
-      <File FileName="src/ViewingScreen.cs" Line="7" Column="15" />
-      <File FileName="src/Screen.cs" Line="14" Column="38" />
-      <File FileName="src/Menu.cs" Line="21" Column="42" />
+      <File FileName="src/Rook.cs" Line="25" Column="16" />
+      <File FileName="src/Bishop.cs" Line="30" Column="27" />
+      <File FileName="src/Knight.cs" Line="29" Column="27" />
+      <File FileName="src/Pawn.cs" Line="29" Column="16" />
+      <File FileName="src/Queen.cs" Line="29" Column="28" />
+      <File FileName="src/ViewingScreen.cs" Line="8" Column="24" />
+      <File FileName="src/Screen.cs" Line="95" Column="9" />
+      <File FileName="src/Menu.cs" Line="29" Column="14" />
       <File FileName="src/GameState.cs" Line="1" Column="1" />
-      <File FileName="src/PieceType.cs" Line="1" Column="1" />
+      <File FileName="src/PieceType.cs" Line="11" Column="13" />
       <File FileName="src/TeamColor.cs" Line="1" Column="1" />
+      <File FileName="src/AIPlayer.cs" Line="14" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug-Mac" />
