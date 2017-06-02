@@ -1,4 +1,7 @@
-﻿using System;
+﻿///<summary>
+/// Move class represents a move made by a piece
+/// </summary>
+using System;
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -18,6 +21,10 @@ namespace KingChess
             _playerMove = playerMove;
 		}
 
+        /// <summary>
+        /// Gets the piece making move
+        /// </summary>
+        /// <value>The piece move.</value>
 		public Piece PieceMove
 		{
 			get
@@ -26,6 +33,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the piece captured in that move
+        /// </summary>
+        /// <value>The piece captured or null</value>
 		public Piece PieceCaptured
 		{
 			get
@@ -34,6 +45,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the Cell the piece move from
+        /// </summary>
+        /// <value>The Cell</value>
 		public Cell CellFrom
 		{
 			get
@@ -42,6 +57,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the cell the piece move to
+        /// </summary>
+        /// <value>The cell to.</value>
 		public Cell CellTo
 		{
 			get
@@ -50,6 +69,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the player making the move
+        /// </summary>
+        /// <value>The player move.</value>
         public Player PlayerMove
         {
             get
@@ -58,6 +81,11 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Converts the cell to string representation.
+        /// </summary>
+        /// <returns>String representation of a Cell.</returns>
+        /// <param name="c">A cell</param>
         public string ConvertCellToString(Cell c)
         {
             string [] yEquivalent = new string [] { "8", "7", "6", "5", "4", "3", "2", "1" };
@@ -65,6 +93,11 @@ namespace KingChess
             return xEquivalent [c.X] + yEquivalent [c.Y];
         }
 
+        /// <summary>
+        /// Converts the piece to string representation.
+        /// </summary>
+        /// <returns>string representation of a piece</returns>
+        /// <param name="p">The Piece</param>
         public string ConvertPieceToString(Piece p)
         {
             Dictionary<Type, string> pieceEquivalent = new Dictionary<Type, string> ();

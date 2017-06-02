@@ -1,4 +1,9 @@
-﻿using System;
+﻿///<summary>
+/// Screen class represents the view the user is watching
+/// Its role is to navigate between different screen and handle
+/// user input at that screen
+/// </summary>
+
 using SwinGameSDK;
 namespace KingChess
 {
@@ -13,18 +18,22 @@ namespace KingChess
             _menu = new Menu ();
         }
 
+        /// <summary>
+        /// Gets the viewing screen.
+        /// </summary>
+        /// <value>The viewing screen the user is seeing</value>
         public ViewingScreen ViewingScreen
         {
             get
             {
                 return _viewing;
             }
-            set
-            {
-                _viewing = value;    
-            }
         }
 
+        /// <summary>
+        /// The main menu of the screen
+        /// </summary>
+        /// <value>The menu</value>
         public Menu Menu
         {
             get
@@ -33,6 +42,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the game.
+        /// </summary>
+        /// <value>The game.</value>
         public ChessGame Game
         {
             get
@@ -41,11 +54,18 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Creates the new game.
+        /// </summary>
+        /// <param name="AI">Whether the player is human or AI</param>
         public void CreateGame(bool AI)
         {
             _game = new ChessGame (AI);
         }
 
+        /// <summary>
+        /// Loads the resources.
+        /// </summary>
 		public void LoadResources ()
 		{
 			SwinGame.LoadBitmapNamed ("ChessBoard", "ChessBoard.png");
@@ -76,11 +96,17 @@ namespace KingChess
 			SwinGame.LoadFontNamed ("Chelsea", "Chelsea.ttf", 15);
 		}
 
+        /// <summary>
+        /// Frees the resources.
+        /// </summary>
 		public void FreeResources ()
 		{
 			SwinGame.FreeFont (SwinGame.FontNamed ("Chelsea"));
 		}
 
+        /// <summary>
+        /// Handles the game for Human vs Human
+        /// </summary>
         public void HandleGame()
         {
             if (SwinGame.MouseClicked (MouseButton.LeftButton))
@@ -93,6 +119,9 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Handles the user input.
+        /// </summary>
         public void HandleUserInput()
         {
             SwinGame.ProcessEvents ();
@@ -118,6 +147,9 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Draw the screen
+        /// </summary>
         public void Draw()
         {
             switch (_viewing)
@@ -137,6 +169,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Changes the screen viewing.
+        /// </summary>
+        /// <param name="viewing">The screen to change to.</param>
         public void ChangeScreenViewing(ViewingScreen viewing)
         {
             _viewing = viewing;

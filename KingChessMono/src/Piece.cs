@@ -1,4 +1,9 @@
-﻿using System;
+﻿///<summary>
+/// The abstract class which contains 
+/// roles and collaborations of a piece to the
+/// game
+/// </summary>
+using System;
 using System.IO;
 using SwinGameSDK;
 using System.Collections.Generic;
@@ -17,6 +22,10 @@ namespace KingChess
 		private bool _isSelected;
         private static Dictionary<string, Type> _pieceRegistry = new Dictionary<string, Type> ();
 
+        /// <summary>
+        /// Gets the bitmap of a piece
+        /// </summary>
+        /// <returns>The Bitmap</returns>
         public Bitmap MyBitmap()
         {
             switch (Type)
@@ -54,31 +63,57 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Registers the piece to the dictionary
+        /// </summary>
+        /// <param name="name">the string representation of the piece type</param>
+        /// <param name="t">the piece type</param>
         public static void RegisterPiece(string name, Type t)
         {
             _pieceRegistry.Add (name, t);
         }
 
+        /// <summary>
+        /// Creates an instance to Piece class
+        /// </summary>
+        /// <returns>A Piece</returns>
+        /// <param name="name">string representation of that piece</param>
+        /// <param name="team">team color of the piece</param>
+        /// <param name="ID">ID of the piece</param>
         public static Piece CreatePiece(string name, TeamColor team, int ID)
         {
             return (Piece)Activator.CreateInstance (_pieceRegistry [name], team, ID);
         }
 
+        /// <summary>
+        /// Clears the piece registry.
+        /// </summary>
         public static void ClearPieceRegistry()
         {
             _pieceRegistry.Clear ();
         }
 
+        /// <summary>
+        /// Draw the piece
+        /// </summary>
         public void Draw()
         {
             SwinGame.DrawBitmap (MyBitmap (), BOTTOM_LEFT_CELL_X + Cell.X * CELL_WIDTH, BOTTOM_LEFT_CELL_Y - Cell.Y * CELL_WIDTH);
         }
 
+        /// <summary>
+        /// Gets the type of the piece
+        /// </summary>
+        /// <value>Piece Type</value>
         public abstract PieceType Type
         {
             get;
         }
 
+        /// <summary>
+        /// X-coordinate of the piece
+        /// </summary>
+        /// <value>X-coordinate</value>
         public int X
         {
             get
@@ -87,7 +122,11 @@ namespace KingChess
             }
         }
 
-        public int Y
+		/// <summary>
+		/// Y-coordinate of the piece
+		/// </summary>
+		/// <value>Y-coordinate</value>
+		public int Y
         {
             get
             {
@@ -101,6 +140,11 @@ namespace KingChess
             _id = ID;
 		}
 
+        /// <summary>
+        /// Gets the identifier of a Piece, especially pieces that 
+        /// exist in pair like Bishop, Rook or Knight
+        /// </summary>
+        /// <value>The identifier.</value>
         public int ID
         {
             get
@@ -109,6 +153,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the team color
+        /// </summary>
+        /// <value>The color of the team</value>
 		public TeamColor Team
 		{
 			get
@@ -117,6 +165,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets a value indicating whether the piece is selected.
+        /// </summary>
+        /// <value>boolean to determine if a piece is selected</value>
 		public bool isSelected
 		{
 			get
@@ -125,11 +177,20 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the value of a piece to determine Board Value
+        /// </summary>
+        /// <value>The value.</value>
         public abstract int Value
         {
             get;
         }
 
+        /// <summary>
+        /// Assign a Cell to a piece
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="c">the cell</param>
         public void Deployed(Cell c)
         {
             if (c != null)
@@ -146,6 +207,10 @@ namespace KingChess
 
         }
 
+        /// <summary>
+        /// Gets the cell the piece is standing on
+        /// </summary>
+        /// <value>A Cell</value>
         public Cell Cell
         {
             get
@@ -155,16 +220,25 @@ namespace KingChess
 
         }
 
+        /// <summary>
+        /// Removes the cell from the piece
+        /// </summary>
         public void RemoveCell()
         {
             Deployed (null);
         }
 
+        /// <summary>
+        /// Select the piece
+        /// </summary>
         public void Select()
         {
             _isSelected = true;
         }
 
+        /// <summary>
+        /// Deselect the piece.
+        /// </summary>
         public void Deselect()
         {
             _isSelected = false;
@@ -172,6 +246,11 @@ namespace KingChess
 
 		public abstract List<Cell> GetPossibleMoves(Board board);
 
+        /// <summary>
+        /// Key of the dictionary
+        /// </summary>
+        /// <returns>The string representation of a piece</returns>
+        /// <param name="p">the Piece</param>
         public string Key(Piece p)
         {
             foreach (string s in _pieceRegistry.Keys)
@@ -180,6 +259,11 @@ namespace KingChess
             return null;
         }
 
+        /// <summary>
+        /// Save its information to the file
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="writer">A StreamWriter</param>
         public void Save (StreamWriter writer)
         {
             writer.WriteLine (Key (this));
@@ -189,6 +273,12 @@ namespace KingChess
             writer.WriteLine (Y);
         }
 
+        /// <summary>
+        /// Load itself from the file
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="reader">A StreamReader</param>
+        /// <param name="players">the players in the game</param>
         public static void Load(StreamReader reader, Player[] players)
         {
             string pieceType = reader.ReadLine ();

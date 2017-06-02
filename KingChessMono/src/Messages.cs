@@ -1,4 +1,7 @@
-﻿using System;
+﻿///<summary>
+///Messages class represents the messages and buttons displayed
+/// at the right hand side of the screen
+/// </summary>
 using System.Collections.Generic;
 using SwinGameSDK;
 
@@ -12,6 +15,11 @@ namespace KingChess
         private const int MOVES_X = 570;
         private const int FIRST_MOVE_Y = 50;
 
+        /// <summary>
+        /// Determines the checking condition of the game and return a string
+        /// </summary>
+        /// <returns>A string message</returns>
+        /// <param name="game">The game</param>
         public string DetermineCheck(ChessGame game)
         {
             for (int i = 0; i < 2; i++)
@@ -27,11 +35,19 @@ namespace KingChess
             return "In safety";
         }
 
+        /// <summary>
+        /// Draws the checking state on the screen
+        /// </summary>
+        /// <param name="game">the Game</param>
         public void DrawCheckingState(ChessGame game)
         {
             SwinGame.DrawText (DetermineCheck (game), Color.Chocolate, SwinGame.FontNamed ("Chelsea"), CHECKING_STATE_X, CHECKING_STATE_Y);
         }
 
+        /// <summary>
+        /// Draws the last 10 moves of the game
+        /// </summary>
+        /// <param name="moves">The list of moves made</param>
         public void DrawMoves(List<Move> moves)
         {
             for (int i = 0; i < 10; i++)
@@ -52,6 +68,9 @@ namespace KingChess
 
 		}
 
+        /// <summary>
+        /// Draws the buttons.
+        /// </summary>
         public void DrawButtons()
         {
 			SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Undo_active"), 600, 350);
@@ -60,6 +79,10 @@ namespace KingChess
             SwinGame.DrawBitmap (SwinGame.BitmapNamed ("Mainmenu"), 600, 500);
         }
 
+        /// <summary>
+        /// Draws the winner on the screen 
+        /// </summary>
+        /// <param name="game">Game.</param>
         public void DrawWinner(ChessGame game)
         {
             string toCheck = DetermineCheck (game);
@@ -71,6 +94,11 @@ namespace KingChess
                 SwinGame.DrawText (game.PlayerInturn.Team + " 's turn", Color.Crimson, SwinGame.FontNamed ("Chelsea"), 620, 400);
         }
 
+        /// <summary>
+        /// Draw the messages
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="game">Chess Game</param>
         public void Draw(ChessGame game)
         {
             DrawCheckingState(game);

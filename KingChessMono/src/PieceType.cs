@@ -1,4 +1,7 @@
-﻿using System;
+﻿///<summary>
+/// Different types of pieces in
+/// the game
+/// </summary>
 namespace KingChess
 {
 	public enum PieceType

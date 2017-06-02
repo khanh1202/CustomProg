@@ -1,4 +1,8 @@
-﻿using System;
+﻿///<summary>
+/// Bishop class represents the Bishop 
+/// pieces in the chess game
+/// </summary>
+
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -13,6 +17,10 @@ namespace KingChess
             
         }
 
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>PieceType.Bishop</value>
         public override PieceType Type
         {
             get
@@ -21,6 +29,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>330 for black bishop and -330 for white one</value>
         public override int Value
         {
             get
@@ -31,12 +43,18 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the possible moves.
+        /// </summary>
+        /// <returns>The list of possible moves.</returns>
+        /// <param name="board">game board</param>
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();
 			int tempx, tempy;
             tempx = X - 1;
 			tempy = Y - 1;
+            //check south-west
 			while (tempx >= 0 && tempy >= 0)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -54,6 +72,7 @@ namespace KingChess
 
 			tempx = X + 1;
 			tempy = Y + 1;
+            //check north-east
 			while (tempx < 8 && tempy < 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -71,6 +90,7 @@ namespace KingChess
 
 			tempx = X + 1;
 			tempy = Y - 1;
+            //check south-east
 			while (tempx < 8 && tempy >= 0)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -88,6 +108,7 @@ namespace KingChess
 
 			tempx = X - 1;
 			tempy = Y + 1;
+            //check north-west
 			while (tempx >= 0 && tempy < 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)

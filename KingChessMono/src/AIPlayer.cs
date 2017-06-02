@@ -1,5 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿///<summary>
+/// AIPlayer represents the AI player
+/// in the chess game
+/// </summary>
 using SwinGameSDK;
 namespace KingChess
 {
@@ -9,6 +11,11 @@ namespace KingChess
         {
         }
 
+        /// <summary>
+        /// Takes the turn.
+        /// </summary>
+        /// <param name="point">MousePosition</param>
+        /// <param name="game">the game</param>
         public override void TakeTurn(Point2D point, ChessGame game)
         {
             Move bestMove = BestMove (3, game, this);

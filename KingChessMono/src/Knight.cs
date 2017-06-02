@@ -1,4 +1,8 @@
-﻿using System;
+﻿///<summary>
+/// Knight class represents the Knight
+/// pieces in the chess game
+/// </summary>
+
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -12,6 +16,10 @@ namespace KingChess
         {
         }
 
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>PieceType.Knight</value>
         public override PieceType Type
         {
             get
@@ -20,6 +28,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>320 for black Knight and -320 for white one</value>
         public override int Value
         {
             get
@@ -29,6 +41,12 @@ namespace KingChess
                 return -320;
             }
         }
+
+        /// <summary>
+        /// Gets the possible moves.
+        /// </summary>
+        /// <returns>The possible moves.</returns>
+        /// <param name="board">the game board</param>
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();

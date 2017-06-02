@@ -1,4 +1,9 @@
-﻿using System;
+﻿///<summary>
+/// the Cell represents the squares on the
+/// game board
+/// </summary>
+
+using System;
 using SwinGameSDK;
 namespace KingChess
 {
@@ -17,6 +22,10 @@ namespace KingChess
 			_piece = piece;
 		}
 
+        /// <summary>
+        /// Gets the column of the cell
+        /// </summary>
+        /// <value>column index</value>
 		public int X
 		{
 			get
@@ -25,6 +34,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets the row of the cell
+        /// </summary>
+        /// <value>row index</value>
 		public int Y
 		{
 			get
@@ -33,6 +46,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Gets or sets the piece standing on the cell
+        /// </summary>
+        /// <value>A Piece</value>
 		public Piece Piece
 		{
 			get
@@ -56,6 +73,10 @@ namespace KingChess
 			}
 		}
 
+        /// <summary>
+        /// Removes the piece from the cell
+        /// </summary>
+        /// <param name="p">the Player that has the removed piece</param>
         public void RemovePiece(Player p)
         {
             if (_piece != null)
@@ -65,16 +86,32 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Check if the cell has any piece standing on it
+        /// </summary>
+        /// <returns><c>true</c>, if the piece is null, <c>false</c> otherwise.</returns>
 		public bool isEmpty()
 		{
 			return _piece == null;
 		}
 
+		/// <summary>
+        /// Check if it is a possible move of a piece
+        /// </summary>
+        /// <returns><c>true</c>, if the cell is contained in the possible moves list of the piece, <c>false</c> otherwise.</returns>
+        /// <param name="p">the piece checking</param>
+        /// <param name="b">The game board</param>
 		public bool isPossibleMoveOf(Piece p, Board b)
 		{
 			return p.GetPossibleMoves(b).Contains(this);
 		}
 
+        /// <summary>
+        /// check if the cell is checked by any piece of a player
+        /// </summary>
+        /// <returns><c>true</c>, if the cell is possible move of any piece in a player's pieces, <c>false</c> otherwise.</returns>
+        /// <param name="opponent">opponent player</param>
+        /// <param name="b">the board</param>
 		public bool isChecked(Player opponent, Board b)
 		{
 			foreach (Piece p in opponent.Pieces)
@@ -83,6 +120,9 @@ namespace KingChess
 			return false;
 		}
 
+        /// <summary>
+        /// Draws the outline of the cell
+        /// </summary>
         public void DrawOutline()
         {
             SwinGame.DrawRectangle (Color.Green, BOTTOM_LEFT_CELL_X + X * CELL_WIDTH, BOTTOM_LEFT_CELL_Y - Y*CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);

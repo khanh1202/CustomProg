@@ -1,4 +1,7 @@
-﻿using System;
+﻿///<summary>
+/// Derived class representing Queen pieces
+/// </summary>
+
 using System.Collections.Generic;
 namespace KingChess
 {
@@ -12,6 +15,10 @@ namespace KingChess
         {
         }
 
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>PieceType.Queen</value>
         public override PieceType Type
         {
             get
@@ -20,6 +27,10 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the value for calculating next move for AI
+        /// </summary>
+        /// <value>900 for black Queen and -900 for White one</value>
         public override int Value
         {
             get
@@ -30,10 +41,16 @@ namespace KingChess
             }
         }
 
+        /// <summary>
+        /// Gets the possible moves of a Queen
+        /// </summary>
+        /// <returns>List of cells a Queen can move to</returns>
+        /// <param name="board">the game Board</param>
 		public override List<Cell> GetPossibleMoves(Board board)
 		{
 			List<Cell> possiblemoves = new List<Cell>();
 			int tempx = X - 1;
+            //check on the left
 			while (tempx >= 0)
 			{
 				if (board.Cells[tempx, Y].Piece == null)
@@ -49,6 +66,7 @@ namespace KingChess
 			}
 
 			tempx = X + 1;
+            //check on the right
 			while (tempx< 8)
 			{
 				if (board.Cells[tempx, Y].Piece == null)
@@ -65,6 +83,7 @@ namespace KingChess
 			}
 
 			int tempy = Y - 1;
+            //check behind
 			while (tempy >= 0)
 			{
 				if (board.Cells[X, tempy].Piece == null)
@@ -81,6 +100,7 @@ namespace KingChess
 			}
 
 			tempy = Y + 1;
+            //check infront of the Queen
 			while (tempy< 8)
 			{
 				if (board.Cells[X, tempy].Piece == null)
@@ -96,6 +116,7 @@ namespace KingChess
 				tempy++;
 			}
 
+            //check south-west 
 			tempx = X - 1;
 			tempy = Y - 1;
 			while (tempx >= 0 && tempy >= 0)
@@ -115,6 +136,7 @@ namespace KingChess
 
 			tempx = X + 1;
 			tempy = Y + 1;
+            //check north east
 			while (tempx< 8 && tempy< 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -133,6 +155,7 @@ namespace KingChess
 
 			tempx = X + 1;
 			tempy = Y - 1;
+            //check south east
 			while (tempx< 8 && tempy >= 0)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
@@ -151,6 +174,7 @@ namespace KingChess
 
 			tempx = X - 1;
 			tempy = Y + 1;
+            //check north-west
 			while (tempx >= 0 && tempy< 8)
 			{
 				if (board.Cells[tempx, tempy].Piece == null)
